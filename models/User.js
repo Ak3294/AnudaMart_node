@@ -30,12 +30,12 @@ const schema = new mongoose.Schema({
         max: 50,
         required: true,
     },
-    phone: {
-        type: String,
-        unique: true,
-        max: 255,
-        required: true,
-    },
+    // phone: {
+    //     type: String,
+    //     // unique: true,
+    //     // max: 255,
+    //     // required: true,
+    // },
     password: {
         type: String,
         min: 6,
@@ -49,7 +49,7 @@ const schema = new mongoose.Schema({
     address: {
         type: String,
         max: 255,
-        required: true,
+        // required: true,
     },
     address2: {
         type: String,

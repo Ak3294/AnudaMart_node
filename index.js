@@ -8,19 +8,19 @@ require("dotenv").config();
 const PORT = process.env.PORT;
 
 io.on("connection", (socket) => {
-  console.log("socket connected");
-  socket.on("disconnect", function () {
-    console.log("socket  disconnect!");
-  });
-  app.socket = socket;
+    console.log("socket connected");
+    socket.on("disconnect", function () {
+        console.log("socket  disconnect!");
+    });
+    app.socket = socket;
 });
 
 // Listening to PORT 3000
 app.listen(PORT, () => {
-  setTimeout(printURL, 50);
-  rainbow(`App running on port ${PORT} ..`);
+    setTimeout(printURL, 50);
+    rainbow(`App running on port ${PORT} ..`);
 });
 
 const printURL = () => {
-  console.log("\x1b[36m%s\x1b[0m", `url: http://localhost:${PORT}`);
+    console.log("\x1b[36m%s\x1b[0m", `url: http://localhost:${PORT}`);
 };

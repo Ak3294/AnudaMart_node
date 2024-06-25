@@ -1,4 +1,5 @@
 const User = require("../../models/User");
+const Coupon = require("../../models/Coupon");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
@@ -28,76 +29,35 @@ const upload = multer({
 class webauthController {
     static register = async (req, res) => {
         try {
-            upload(req, res, async function (err) {
-                if (req.fileValidationError) {
-                    return res.send(req.fileValidationError);
-                } else if (!req.file) {
-                    return res.send("Please upload an image");
-                } else if (err instanceof multer.MulterError) {
-                    console.log(err);
-                    return res.send(err);
-                } else if (err) {
-                    console.log(err);
-                    return res.send(err);
-                }
+            const name = req.body.name;
+            const email = req.body.email;
+            const password = req.body.password;
+            const confirm_password = req.body.confirm_password;
 
-                const name = req.body.name;
-                const first_name = req.body.first_name;
-                const last_name = req.body.last_name;
-                const email = req.body.email;
-                const dob = req.body.dob;
-                const phone = req.body.phone;
-                const address = req.body.address;
-                const address2 = req.body.address2;
-                const city = req.body.city;
-                const pincode = req.body.pincode;
-                const additional_info = req.body.additional_info;
+            if (password !== confirm_password)
+                return res.status(401).send("Password does not match");
 
-                var mobileRegex = new RegExp("^[0-9]{10}$");
-                var emailRegex = new RegExp(
-                    "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$"
-                );
+            const salt = await bcrypt.genSalt(Number(process.env.SALT_ROUNDS));
+            const hashedpassword = await bcrypt.hash(password, salt);
+            const hashedconfirm_password = await bcrypt.hash(
+                confirm_password,
+                salt
+            );
 
-                if (!emailRegex.test(email))
-                    return res.send("Invalid email address");
-                if (!mobileRegex.test(phone))
-                    return res.send("Invalid phone number");
-
-                const salt = await bcrypt.genSalt(
-                    Number(process.env.SALT_ROUNDS)
-                );
-                const hashedpassword = await bcrypt.hash(
-                    req.body.password,
-                    salt
-                );
-                const hashedconfirm_password = await bcrypt.hash(
-                    req.body.confirm_password,
-                    salt
-                );
-                const userExists = await User.findOne({ email: email });
-                if (userExists) {
-                    return res.status(401).send("user already exists");
-                }
-                const user = await User({
-                    image: req.file.filename,
-                    user_type: "u",
-                    name: name,
-                    first_name: first_name,
-                    last_name: last_name,
-                    email: email,
-                    dob: dob,
-                    phone: phone,
-                    address: address,
-                    address2: address2,
-                    pincode: pincode,
-                    city: city,
-                    additional_info: additional_info,
-                    password: hashedpassword,
-                    confirm_password: hashedconfirm_password,
-                });
-                await user.save();
-                return res.send("User Registration successful");
+            const userExists = await User.findOne({ email: email });
+            if (userExists) {
+                return res.status(401).send("user already exists");
+            }
+            const user = await User({
+                // image: req.file.filename,
+                user_type: "u",
+                name: name,
+                email: email,
+                password: hashedpassword,
+                confirm_password: hashedconfirm_password,
             });
+            await user.save();
+            return res.send("User Registration successful");
         } catch (error) {
             console.log(error);
             return res
@@ -224,11 +184,12 @@ class webauthController {
 
             res.send({
                 user: {
+                    user_type: user.user_type,
                     name: user.name,
                     first_name: user.first_name,
                     last_name: user.last_name,
                     email: user.email,
-                    phone: user.phone,
+                    // phone: user.phone,
                     dob: user.dob,
                     address: user.address,
                     address2: user.address2,
@@ -262,17 +223,17 @@ class webauthController {
                     first_name: req.body.first_name,
                     last_name: req.body.last_name,
                     email: req.body.email,
-                    phone: req.body.phone,
+                    // phone: req.body.phone,
                     address: req.body.address,
                     address2: req.body.address2,
                     city: req.body.city,
                     pincode: req.body.pincode,
                     additional_info: req.body.additional_info,
                 };
-                let data1 = {};
+                let userData = {};
                 for (let i in data) {
                     if (data[i] != "") {
-                        data1[i] = data[i]; // json object
+                        userData[i] = data[i]; // json object
                     }
                 }
 
@@ -283,15 +244,15 @@ class webauthController {
                     {
                         _id: profile._id,
                     },
-                    { $set: data1 }
+                    { $set: userData }
                 );
 
-                let Data1 = await profile.save();
+                let updatedData = await profile.save();
                 return res.status(201).send({
                     message: "profile Update Successfully",
                     status: true,
                     success: true,
-                    data: Data1,
+                    data: updatedData,
                 });
             });
         } catch (error) {
@@ -328,6 +289,41 @@ class webauthController {
             return res
                 .status(401)
                 .send("Something went wrong please try again later");
+        }
+    };
+
+    static coupon_verify = async (req, res) => {
+        let msg = "Something went wrong please try again later";
+        try {
+            var token = req.body.token;
+            var coupon_code = req.body.coupon_code;
+            const payload = jwt.decode(token, process.env.TOKEN_SECRET);
+            const user = await User.findById(payload.id);
+            if (!user) return res.status(401).send("User not found");
+
+            let findData = { coupon_code: coupon_code, isActive: true };
+
+            let findRec = await Coupon.findOne(findData);
+            if (!findRec) return res.status(401).send("Invalid coupon");
+
+            if (findRec.is_used == true)
+                return res.status(401).send("Coupon already used");
+            if (new Date() > findRec.expiry_date)
+                return res.status(401).send("Coupon has expired");
+
+            return res.send({
+                message: "Coupon verified successfully",
+                success: true,
+                data: {
+                    coupon_code: coupon_code,
+                    discount: findRec.discount,
+                    valid_start_date: findRec.valid_start_date,
+                    expiry_date: findRec.expiry_date,
+                },
+            });
+        } catch (error) {
+            console.log(error);
+            return res.status(401).send(msg);
         }
     };
 }
