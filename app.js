@@ -7,7 +7,7 @@ const bodyParser = require("body-parser");
 const createAdmin = require("./config/createAdmin");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
-
+var cors = require("cors");
 const WebsiteRoutes = require("./website-routes");
 
 // create admin
@@ -23,6 +23,7 @@ const app = express(),
         env: { DB_CONNECT, PORT },
     } = process;
 
+app.use(cors());
 // set the view engine to ejs
 app.set("view engine", "ejs");
 
@@ -60,7 +61,6 @@ app.use(
     })
 );
 
-//middleware
 app.use(bodyParser.json());
 app.use(
     bodyParser.urlencoded({

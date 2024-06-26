@@ -204,7 +204,7 @@
                                                 </td>
                                             </tr>
                                             <% } else {%> <%
-                                            categories.forEach(function(category){%>
+                                            categories.forEach(function(categories){%>
                                             <tr>
                                                 <td>
                                                     <div class="form-check">
@@ -228,8 +228,8 @@
                                                             <div>
                                                                 <img
                                                                     class="avatar-xs rounded-circle customer-image-elem"
-                                                                    src="../../dist/category/<%- category.icon %>"
-                                                                    alt="<%- category.icon %>"
+                                                                    src="../../dist/category/<%- categories.icon %>"
+                                                                    alt="<%- categories.icon %>"
                                                                 />
                                                             </div>
                                                         </div>
@@ -244,9 +244,9 @@
                                                                     class="text-reset customer-name-elem"
                                                                 >
                                                                     <%=
-                                                                    category.name
+                                                                    categories.name
                                                                     ?
-                                                                    category.name
+                                                                    categories.name
                                                                     : ''%>
                                                                 </a>
                                                             </h5>
@@ -254,31 +254,37 @@
                                                     </div>
                                                 </td>
                                                 <td class="category">
-                                                    <% if(category.parent_name)
-                                                    { %> <%=
-                                                    category.parent_name %> <% }
-                                                    else { %> –– <% } %>
+                                                    <%
+                                                    if(categories.parent_name) {
+                                                    %> <%=
+                                                    categories.parent_name %> <%
+                                                    } else { %> –– <% } %>
                                                 </td>
                                                 <td class="slug">
-                                                    <%= category.slug?
-                                                    category.slug: ''%>
+                                                    <%= categories.slug?
+                                                    categories.slug: ''%>
                                                 </td>
                                                 <td class="title">
-                                                    <%= category.meta_title?
-                                                    category.meta_title: ''%>
+                                                    <%= categories.meta_title?
+                                                    categories.meta_title: ''%>
                                                 </td>
                                                 <td class="description">
                                                     <%=
-                                                    category.meta_description?
-                                                    category.meta_description:
+                                                    categories.meta_description?
+                                                    categories.meta_description:
                                                     ''%>
                                                 </td>
+
                                                 <td class="status">
                                                     <span
                                                         class="badge bg-secondary-subtle text-secondary"
-                                                        >Unactive</span
                                                     >
+                                                        <%= categories.status_id
+                                                        ? categories.status_id :
+                                                        ''%>
+                                                    </span>
                                                 </td>
+
                                                 <td>
                                                     <div
                                                         class="dropdown position-static"
@@ -312,8 +318,9 @@
                                                                     class="dropdown-item edit-item-btn"
                                                                     data-bs-toggle="modal"
                                                                     data-name="Category"
-                                                                    data-id="<%= category._id %>"
                                                                     href="#showEditModal"
+                                                                    id="edit_btn"
+                                                                    data-model="<%= JSON.stringify(categories) %>"
                                                                     ><i
                                                                         class="ph-pencil align-middle me-1"
                                                                     ></i>
@@ -325,7 +332,7 @@
                                                                     class="dropdown-item remove-item-btn"
                                                                     data-bs-toggle="modal"
                                                                     href="#deleteRecordModal"
-                                                                    data-id="<%= category._id %>"
+                                                                    data-id="<%= categories._id %>"
                                                                     ><i
                                                                         class="ph-trash align-middle me-1"
                                                                     ></i>
@@ -607,7 +614,7 @@
                     ></div>
                     <input type="hidden" id="editid" name="editid" />
 
-                    <div class="text-center mb-3">
+                    <!-- <div class="text-center mb-3">
                         <div class="position-relative d-inline-block">
                             <div
                                 class="position-absolute top-100 start-100 translate-middle"
@@ -645,7 +652,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="mb-3">
                         <label for="customername-field" class="form-label"
                             >Category Name</label
@@ -714,8 +721,8 @@
                         >
                         <select
                             class="form-control"
-                            id="edit_status"
-                            name="status"
+                            id="edit_status_id"
+                            name="status_id"
                         >
                             <option value="" disabled selected>
                                 Select Status
@@ -854,46 +861,41 @@
 
     //#region Edit Category
     $(document).on("click", "#edit_btn", function (e) {
-        // var row = $(this).closest("tr");
-        // var data = table.row(row).data();
-        // console.log("data", data);
-        $("#editid").val(data._id);
-        $("#editform").find("#edit_student_id").val(data.student_id);
-        $("#editform").find("#edit_assign_teacher").val(data.assign_teacher);
-        $("#editform").find("#edit_meeting_id").val(data.meeting_id);
-        $("#editform")
-            .find("#edit_meeting_password")
-            .val(data.meeting_password);
-        $("#editform").find("#edit_date").val(data.date);
-        $("#editform").find("#edit_time").val(data.time);
-    });
+        var data = $(this).attr("data-model");
+        data = JSON.parse(data);
 
+        // Filling form fields with data according to the model
+        $("#editid").val(data._id);
+        $("#edit_name").val(data.name);
+        $("#edit_parent_id").val(data.parent_id._id);
+        $("#edit_slug").val(data.slug);
+        $("#edit_meta_title").val(data.meta_title);
+        $("#edit_meta_description").val(data.meta_description);
+        $("#edit_status_id").val(data.status_id);
+    });
+    function getFormData($form) {
+        var unindexed_array = $form.serializeArray();
+        var indexed_array = {};
+
+        $.map(unindexed_array, function (n, i) {
+            indexed_array[n["name"]] = n["value"];
+        });
+
+        return indexed_array;
+    }
     var editform = $("#editform");
     editform.on("submit", editSubmitHandler);
 
     function editSubmitHandler(e) {
         e.preventDefault();
 
-        let data = {
-            student_id: $("#editform").find("#edit_student_id").val(),
-            assign_teacher: $("#editform").find("#edit_assign_teacher").val(),
-            meeting_id: $("#editform").find("#edit_meeting_id").val(),
-            meeting_password: $("#editform")
-                .find("#edit_meeting_password")
-                .val(),
-            date: $("#editform").find("#edit_date").val(),
-            time: $("#editform").find("#edit_time").val(),
-            editid: $("#editform").find("#editid").val(),
-        };
-
+        var formData = getFormData(editform);
         // DO POST
         $.ajax({
             type: "POST",
             contentType: "application/json",
             url: "/admin/category/edit",
-            data: JSON.stringify({
-                id: id,
-            }),
+            data: JSON.stringify(formData),
         })
             .done((res) => {
                 if (res.status == 200) {

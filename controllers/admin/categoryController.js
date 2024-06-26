@@ -20,8 +20,24 @@ class CategoryController {
                     },
                 },
                 {
+                    $lookup: {
+                        from: "statuses",
+                        localField: "status_id",
+                        foreignField: "_id",
+                        as: "status",
+                    },
+                },
+                {
+                    $unwind: {
+                        path: "$status",
+                        preserveNullAndEmptyArrays: true,
+                    },
+                },
+                {
                     $addFields: {
                         parent_name: { $arrayElemAt: ["$parent.name", 0] },
+                        parent_id: { $arrayElemAt: ["$parent", 0] },
+                        status_name: "$status",
                     },
                 },
                 {
@@ -30,10 +46,12 @@ class CategoryController {
                         name: 1,
                         icon: 1,
                         slug: 1,
+                        parent_id: 1,
                         parent_name: 1,
                         meta_title: 1,
                         meta_description: 1,
                         status_id: 1,
+                        status_name: 1,
                         created_at: 1,
                         updated_at: 1,
                     },
@@ -43,34 +61,8 @@ class CategoryController {
                         created_at: -1,
                     },
                 },
-                {
-                    $lookup: {
-                        from: "statuses",
-                        localField: "status_id",
-                        foreignField: "_id",
-                        as: "status",
-                    },
-                },
-                {
-                    $addFields: {
-                        status_name: { $arrayElemAt: ["$status.name", 0] },
-                    },
-                },
-                {
-                    $project: {
-                        _id: 1,
-                        name: 1,
-                        icon: 1,
-                        slug: 1,
-                        parent_name: 1,
-                        meta_title: 1,
-                        meta_description: 1,
-                        status_name: 1,
-                        created_at: 1,
-                        updated_at: 1,
-                    },
-                },
             ]).exec();
+            await Category.populate(categories, { path: "status_id" });
 
             let statuses = await Status.find().sort({
                 created_at: -1,

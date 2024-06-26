@@ -61,7 +61,7 @@ function logout() {
                     $.ajax({
                         type: "POST",
                         contentType: "application/json",
-                        url: "logout",
+                        url: "/admin/logout",
                     })
                         .done((res) => {
                             iziToast.info({
@@ -97,3 +97,75 @@ function logout() {
         ],
     });
 }
+
+document
+    .querySelector(".pagination-next")
+    .addEventListener("click", function () {
+        document.querySelector(".pagination.listjs-pagination") &&
+            document
+                .querySelector(".pagination.listjs-pagination")
+                .querySelector(".active") &&
+            null !=
+                document
+                    .querySelector(".pagination.listjs-pagination")
+                    .querySelector(".active").nextElementSibling &&
+            document
+                .querySelector(".pagination.listjs-pagination")
+                .querySelector(".active")
+                .nextElementSibling.children[0].click();
+    }),
+    document
+        .querySelector(".pagination-prev")
+        .addEventListener("click", function () {
+            document.querySelector(".pagination.listjs-pagination") &&
+                document
+                    .querySelector(".pagination.listjs-pagination")
+                    .querySelector(".active") &&
+                null !=
+                    document
+                        .querySelector(".pagination.listjs-pagination")
+                        .querySelector(".active").previousSibling &&
+                document
+                    .querySelector(".pagination.listjs-pagination")
+                    .querySelector(".active")
+                    .previousSibling.children[0].click();
+        }),
+    document
+        .getElementById("showModal")
+        .addEventListener("show.bs.modal", function (e) {
+            e.relatedTarget.classList.contains("edit-item-btn")
+                ? ((document.getElementById("exampleModalLabel").innerHTML =
+                      "Edit " + e.relatedTarget.dataset.name),
+                  (document
+                      .getElementById("showModal")
+                      .querySelector(".modal-footer").style.display = "block"),
+                  (document.getElementById("add-btn").innerHTML = "Update"))
+                : e.relatedTarget.classList.contains("add-btn")
+                ? ((document.getElementById("exampleModalLabel").innerHTML =
+                      "Add " + e.relatedTarget.dataset.name),
+                  (document
+                      .getElementById("showModal")
+                      .querySelector(".modal-footer").style.display = "block"),
+                  (document.getElementById("add-btn").innerHTML =
+                      "Add " + e.relatedTarget.dataset.name))
+                : ((document.getElementById("exampleModalLabel").innerHTML =
+                      "List " + e.relatedTarget.dataset.name),
+                  (document
+                      .getElementById("showModal")
+                      .querySelector(".modal-footer").style.display = "none"));
+        }),
+    document
+        .querySelector("#image-input")
+        .addEventListener("change", function () {
+            var e = document.querySelector("#image-preview"),
+                t = document.querySelector("#image-input").files[0],
+                a = new FileReader();
+            a.addEventListener(
+                "load",
+                function () {
+                    e.src = a.result;
+                },
+                !1
+            ),
+                t && a.readAsDataURL(t);
+        });

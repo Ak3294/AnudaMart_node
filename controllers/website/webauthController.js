@@ -1,5 +1,5 @@
 const User = require("../../models/User");
-const Coupon = require("../../models/Coupon");
+// const Coupon = require("../../models/Coupon");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const multer = require("multer");
@@ -99,6 +99,8 @@ class webauthController {
                 return res.status(200).send({
                     token,
                     user_type: user.user_type,
+                    name: user.name,
+                    email: user.email,
                 });
             }
         } catch (error) {
@@ -292,40 +294,40 @@ class webauthController {
         }
     };
 
-    static coupon_verify = async (req, res) => {
-        let msg = "Something went wrong please try again later";
-        try {
-            var token = req.body.token;
-            var coupon_code = req.body.coupon_code;
-            const payload = jwt.decode(token, process.env.TOKEN_SECRET);
-            const user = await User.findById(payload.id);
-            if (!user) return res.status(401).send("User not found");
+    // static coupon_verify = async (req, res) => {
+    //     let msg = "Something went wrong please try again later";
+    //     try {
+    //         var token = req.body.token;
+    //         var coupon_code = req.body.coupon_code;
+    //         const payload = jwt.decode(token, process.env.TOKEN_SECRET);
+    //         const user = await User.findById(payload.id);
+    //         if (!user) return res.status(401).send("User not found");
 
-            let findData = { coupon_code: coupon_code, isActive: true };
+    //         let findData = { coupon_code: coupon_code, isActive: true };
 
-            let findRec = await Coupon.findOne(findData);
-            if (!findRec) return res.status(401).send("Invalid coupon");
+    //         let findRec = await Coupon.findOne(findData);
+    //         if (!findRec) return res.status(401).send("Invalid coupon");
 
-            if (findRec.is_used == true)
-                return res.status(401).send("Coupon already used");
-            if (new Date() > findRec.expiry_date)
-                return res.status(401).send("Coupon has expired");
+    //         if (findRec.is_used == true)
+    //             return res.status(401).send("Coupon already used");
+    //         if (new Date() > findRec.expiry_date)
+    //             return res.status(401).send("Coupon has expired");
 
-            return res.send({
-                message: "Coupon verified successfully",
-                success: true,
-                data: {
-                    coupon_code: coupon_code,
-                    discount: findRec.discount,
-                    valid_start_date: findRec.valid_start_date,
-                    expiry_date: findRec.expiry_date,
-                },
-            });
-        } catch (error) {
-            console.log(error);
-            return res.status(401).send(msg);
-        }
-    };
+    //         return res.send({
+    //             message: "Coupon verified successfully",
+    //             success: true,
+    //             data: {
+    //                 coupon_code: coupon_code,
+    //                 discount: findRec.discount,
+    //                 valid_start_date: findRec.valid_start_date,
+    //                 expiry_date: findRec.expiry_date,
+    //             },
+    //         });
+    //     } catch (error) {
+    //         console.log(error);
+    //         return res.status(401).send(msg);
+    //     }
+    // };
 }
 
 module.exports = webauthController;
