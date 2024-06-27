@@ -1,6 +1,5 @@
 const AttributeSets = require("../../models/AttributeSets");
 const Category = require("../../models/Category");
-let msg = "Something went wrong please try again later";
 
 class AttributeSetsController {
     static list = async (req, res) => {
@@ -11,7 +10,9 @@ class AttributeSetsController {
                 })
                 .populate("category_id");
 
-            let categories = await Category.find().sort({
+            let categories = await Category.find({
+                parent_id: null,
+            }).sort({
                 created_at: -1,
             });
             return res.render("admin/attribute-sets", {
@@ -19,7 +20,10 @@ class AttributeSetsController {
                 categories,
             });
         } catch (error) {
-            return res.status(500).send(msg);
+            console.log(error);
+            return res.status(500).send({
+                message: "Error creating attribute sets: " + error.message,
+            });
         }
     };
 
@@ -37,7 +41,9 @@ class AttributeSetsController {
             });
         } catch (error) {
             console.log(error);
-            return res.status(500).send(msg);
+            return res.status(500).send({
+                message: "Error creating attribute sets: " + error.message,
+            });
         }
     };
 
@@ -64,7 +70,9 @@ class AttributeSetsController {
             });
         } catch (error) {
             console.log(error);
-            return res.status(500).send(msg);
+            return res.status(500).send({
+                message: "Error updating attribute sets: " + error.message,
+            });
         }
     };
 
@@ -78,7 +86,9 @@ class AttributeSetsController {
             });
         } catch (error) {
             console.log(error);
-            return res.status(500).send(msg);
+            return res.status(500).send({
+                message: "Error deleting attribute sets: " + error.message,
+            });
         }
     };
 }

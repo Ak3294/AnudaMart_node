@@ -60,9 +60,10 @@ class webauthController {
             return res.send("User Registration successful");
         } catch (error) {
             console.log(error);
-            return res
-                .status(500)
-                .send("Something went wrong please try again later");
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 
@@ -105,9 +106,10 @@ class webauthController {
             }
         } catch (error) {
             console.log(error);
-            return res
-                .status(500)
-                .send("Something went wrong please try again later");
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 
@@ -136,7 +138,10 @@ class webauthController {
             return res.status(200).send("password changed successfully");
         } catch (error) {
             console.log(error);
-            return res.status(500).send("something went wrong");
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 
@@ -168,9 +173,10 @@ class webauthController {
             return res.status(200).send("password changed successfully");
         } catch (error) {
             console.log(error);
-            return res
-                .status(500)
-                .send("Something went wrong please try again later");
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 
@@ -206,7 +212,10 @@ class webauthController {
             });
         } catch (error) {
             console.log(error);
-            return res.status(401).send(msg);
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 
@@ -259,7 +268,10 @@ class webauthController {
             });
         } catch (error) {
             console.log(error);
-            return res.status(401).send(msg);
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 
@@ -268,7 +280,11 @@ class webauthController {
             req.session.destroy();
             return res.send("success");
         } catch (error) {
-            return res.send("Something went wrong please try again later");
+            console.log(error);
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 
@@ -283,14 +299,18 @@ class webauthController {
             if (user.user_type === switch_account) {
                 return res.send("You are already in this account");
             }
-            user.user_type = switch_account;
-            await user.save();
+            await User.findOneAndUpdate(
+                { _id: user._id },
+                { switch_account: switch_account }
+            );
+
             return res.send("Account switched successfully");
         } catch (error) {
             console.log(error);
-            return res
-                .status(401)
-                .send("Something went wrong please try again later");
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 

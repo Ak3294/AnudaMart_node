@@ -39,6 +39,11 @@
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&amp;display=swap"
             rel="stylesheet"
         />
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+        />
 
         <!-- Layout config Js -->
         <script src="/assets/js/layout.js"></script>
@@ -144,7 +149,7 @@
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
                                         <a
-                                            href="products.html"
+                                            href="/admin/product/list"
                                             class="nav-link"
                                             data-key="t-products"
                                             >Products</a
@@ -152,7 +157,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <a
-                                            href="add-product.html"
+                                            href="/admin/product/add"
                                             class="nav-link"
                                             data-key="t-create-product"
                                             >Add Product</a
@@ -196,6 +201,14 @@
                                             class="nav-link"
                                             data-key="t-products"
                                             >Attribute Sets</a
+                                        >
+                                    </li>
+                                    <li class="nav-item">
+                                        <a
+                                            href="/admin/attribute-values/list"
+                                            class="nav-link"
+                                            data-key="t-products"
+                                            >Attribute Values</a
                                         >
                                     </li>
                                 </ul>

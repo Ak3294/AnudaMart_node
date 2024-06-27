@@ -5,7 +5,6 @@ const path = require("path");
 const root = process.cwd();
 const imageFilter = require("../../config/imageFilter");
 const fs = require("fs");
-let msg = "Something went wrong please try again later";
 
 class CategoryController {
     static list = async (req, res) => {
@@ -72,7 +71,9 @@ class CategoryController {
                 statuses,
             });
         } catch (error) {
-            return res.status(500).send(msg);
+            return res.status(500).send({
+                message: "Error fetching categories: " + error.message,
+            });
         }
     };
 
@@ -113,7 +114,9 @@ class CategoryController {
             });
         } catch (error) {
             console.log(error);
-            return res.status(500).send(msg);
+            return res
+                .status(500)
+                .send({ message: "Error creating category: " + error.message });
         }
     };
 
@@ -164,7 +167,9 @@ class CategoryController {
             // });
         } catch (error) {
             console.log(error);
-            return res.status(500).send(msg);
+            return res
+                .status(500)
+                .send({ message: "Error updating category: " + error.message });
         }
     };
 
@@ -178,7 +183,9 @@ class CategoryController {
             });
         } catch (error) {
             console.log(error);
-            return res.status(500).send(msg);
+            return res
+                .status(500)
+                .send({ message: "Error deleting category: " + error.message });
         }
     };
 }

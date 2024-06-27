@@ -143,14 +143,14 @@ class VendorController {
             });
         } catch (error) {
             console.log(error);
-            return res
-                .status(500)
-                .send("Something went wrong please try again later");
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 
     static update_profile = async (req, res) => {
-        let msg = "Something went wrong please try again later";
         try {
             upload(req, res, async function (err) {
                 var token = req.body.token;
@@ -159,7 +159,11 @@ class VendorController {
                     user_id: payload.id,
                 });
                 if (!vendor) {
-                    return res.status(401).send("Vendor not found");
+                    return res.status(401).send({
+                        message: "Vendor not found",
+                        status: false,
+                        success: false,
+                    });
                 }
 
                 if (req.fileValidationError) {
@@ -210,7 +214,10 @@ class VendorController {
             });
         } catch (error) {
             console.log(error);
-            return res.status(401).send(msg);
+            return res.status(500).send({
+                message: "Something went wrong please try again later",
+                error: error.message,
+            });
         }
     };
 }

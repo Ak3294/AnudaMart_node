@@ -11,7 +11,7 @@
                         <div
                             class="page-title-box d-sm-flex align-items-center justify-content-between"
                         >
-                            <h4 class="mb-sm-0">Attributes</h4>
+                            <h4 class="mb-sm-0">Attribute Values</h4>
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
@@ -21,7 +21,7 @@
                                         >
                                     </li>
                                     <li class="breadcrumb-item active">
-                                        Attributes
+                                        Attribute Values
                                     </li>
                                 </ol>
                             </div>
@@ -39,7 +39,7 @@
                                 >
                                     <div class="flex-grow-1">
                                         <h3 class="card-title mb-0">
-                                            Attributes List
+                                            Values
                                         </h3>
                                     </div>
                                     <div>
@@ -49,12 +49,12 @@
                                                 class="btn btn-thm add-btn"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#showModal"
-                                                data-name="Attributes"
+                                                data-name="Values"
                                             >
                                                 <i
                                                     class="bi bi-plus-circle align-baseline me-1"
                                                 ></i>
-                                                Add Attributes
+                                                Add Values
                                             </button>
                                             <!-- <button
                                                 type="button"
@@ -109,10 +109,10 @@
                                                     </div>
                                                 </th>
                                                 <th class="sort cursor-pointer">
-                                                    Title
+                                                    Attribute
                                                 </th>
                                                 <th class="sort cursor-pointer">
-                                                    Category
+                                                    Value
                                                 </th>
                                                 <th class="sort cursor-pointer">
                                                     Action
@@ -120,7 +120,7 @@
                                             </tr>
                                         </thead>
                                         <tbody class="list">
-                                            <% if(!attributes[0]) { %>
+                                            <% if(!attributes_values[0]) { %>
                                             <tr>
                                                 <td
                                                     colspan="100%"
@@ -130,7 +130,7 @@
                                                 </td>
                                             </tr>
                                             <% } else {%> <%
-                                            attributes.forEach(function(attributes){%>
+                                            attributes_values.forEach(function(attributes){%>
                                             <tr>
                                                 <td>
                                                     <div class="form-check">
@@ -144,15 +144,17 @@
                                                         ></label>
                                                     </div>
                                                 </td>
-                                                <td class="title">
-                                                    <%= attributes.title?
-                                                    attributes.title: ''%>
-                                                </td>
                                                 <td class="category">
-                                                    <%= attributes.category_id?
-                                                    attributes.category_id.name:
+                                                    <%=
+                                                    attributes.attribute_sets_id?
+                                                    attributes.attribute_sets_id.title:
                                                     ''%>
                                                 </td>
+                                                <td class="value">
+                                                    <%= attributes.value?
+                                                    attributes.value: ''%>
+                                                </td>
+
                                                 <td>
                                                     <div
                                                         class="dropdown position-static"
@@ -278,7 +280,7 @@
 </div>
 <!-- END layout-wrapper -->
 
-<!-- Add Attributes Modal -->
+<!-- Add Attribute Value Modal -->
 <div
     class="modal fade"
     id="showModal"
@@ -289,9 +291,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-light p-3">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    Add Attributes
-                </h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Value</h5>
                 <button
                     type="button"
                     class="btn-close"
@@ -310,33 +310,36 @@
                     <input type="hidden" id="id-field" />
 
                     <div class="mb-3">
-                        <label for="name-field" class="form-label">Title</label>
-                        <input
-                            type="text"
-                            id="title-field"
-                            class="form-control"
-                            name="title"
-                            placeholder="Enter Title"
-                        />
-                    </div>
-                    <div class="mb-3">
-                        <label for="Category-field" class="form-label"
-                            >Category</label
-                        >
+                        <label for="Category-field" class="form-label">
+                            Attribute <span class="text-danger">*</span>
+                        </label>
                         <select
                             class="form-control"
-                            id="category-field"
-                            name="category_id"
+                            id="attribute_sets_id"
+                            name="attribute_sets_id"
                         >
                             <option value="" disabled selected>
-                                Select Category
+                                Select Attribute
                             </option>
-                            <%categories.forEach(function(element){ %>
+                            <%attributes.forEach(function(element){ %>
                             <option value="<%= element._id %>">
-                                <%= element.name%>
+                                <%= element.title%>
                             </option>
                             <% }); %>
                         </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name-field" class="form-label"
+                            >Value
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            id="value-field"
+                            class="form-control"
+                            name="value"
+                            placeholder="Enter Value"
+                        />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -353,7 +356,7 @@
                             class="btn btn-success"
                             id="add-btn"
                         >
-                            Add Attribute
+                            Add Value
                         </button>
                     </div>
                 </div>
@@ -361,7 +364,7 @@
         </div>
     </div>
 </div>
-<!-- end Add Attributes Modal -->
+<!-- end Add Attribute Value Modal -->
 
 <!-- deleteRecordModal -->
 <div
@@ -430,7 +433,7 @@
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "/admin/attribute/add",
+            url: "/admin/attribute-values/add",
             data: JSON.stringify(formData),
         })
             .done((res) => {
@@ -460,20 +463,20 @@
             });
     }
 
-    //#region Delete attribute-sets
+    //#region Delete attribute-values
     let idToDelete;
     $(document).ready(function () {
-        // Show the modal and store the status ID to delete
+        // Show the modal and store the attribute-values ID to delete
         $(".remove-item-btn").click(function () {
             idToDelete = $(this).data("id");
         });
 
-        // AJAX request to delete the status
+        // AJAX request to delete the attribute-values
         $("#delete-record").click(function () {
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
-                url: "/admin/attribute/delete/" + idToDelete,
+                url: "/admin/attribute-values/delete/" + idToDelete,
             })
                 .done((res) => {
                     if (res.status == 200) {
@@ -502,5 +505,5 @@
                 });
         });
     });
-    //#endregion Delete attribute-sets
+    //#endregion Delete attribute-values
 </script>

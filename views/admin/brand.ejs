@@ -1,4 +1,5 @@
 <%- include('partials/header.ejs') %>
+
 <!-- Begin page -->
 <div id="layout-wrapper">
     <!-- Start right Content here -->
@@ -11,7 +12,7 @@
                         <div
                             class="page-title-box d-sm-flex align-items-center justify-content-between"
                         >
-                            <h4 class="mb-sm-0">Attributes</h4>
+                            <h4 class="mb-sm-0">Brands</h4>
 
                             <div class="page-title-right">
                                 <ol class="breadcrumb m-0">
@@ -21,7 +22,7 @@
                                         >
                                     </li>
                                     <li class="breadcrumb-item active">
-                                        Attributes
+                                        Brands
                                     </li>
                                 </ol>
                             </div>
@@ -39,7 +40,7 @@
                                 >
                                     <div class="flex-grow-1">
                                         <h3 class="card-title mb-0">
-                                            Attributes List
+                                            Brand List
                                         </h3>
                                     </div>
                                     <div>
@@ -49,12 +50,12 @@
                                                 class="btn btn-thm add-btn"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#showModal"
-                                                data-name="Attributes"
+                                                data-name="Brand"
                                             >
                                                 <i
                                                     class="bi bi-plus-circle align-baseline me-1"
                                                 ></i>
-                                                Add Attributes
+                                                Add Brand
                                             </button>
                                             <!-- <button
                                                 type="button"
@@ -73,7 +74,7 @@
                                                     class="ph-cloud-arrow-up align-middle me-1"
                                                 ></i>
                                                 Export
-                                            </button> -->
+                                            </button> F-->
                                         </div>
                                     </div>
                                 </div>
@@ -84,8 +85,72 @@
                 </div>
                 <!--end row-->
 
-                <div class="row" id="attributes-list">
+                <div class="row" id="customer-list">
                     <div class="col-xxl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row gy-3">
+                                    <div class="col-xl-4">
+                                        <div class="search-box">
+                                            <input
+                                                type="text"
+                                                class="form-control search"
+                                                placeholder="Search customer, email etc..."
+                                            />
+                                            <i
+                                                class="ri-search-line search-icon"
+                                            ></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4">
+                                        <div>
+                                            <select
+                                                class="form-control"
+                                                id="idStatus"
+                                                data-choices
+                                                data-choices-search-false
+                                            >
+                                                <option value="all">
+                                                    All Select
+                                                </option>
+                                                <option value="Active">
+                                                    Active
+                                                </option>
+                                                <option value="Unactive">
+                                                    Unactive
+                                                </option>
+                                                <option value="Block">
+                                                    Block
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4">
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="datepicker-range"
+                                            data-provider="flatpickr"
+                                            data-date-format="d M, Y"
+                                            data-range-date="true"
+                                            placeholder="Select date"
+                                        />
+                                    </div>
+                                    <div class="col-xl-2 col-md-4">
+                                        <button
+                                            class="btn btn-subtle-primary w-100"
+                                            onclick="filterData();"
+                                        >
+                                            <i
+                                                class="bi bi-funnel align-baseline me-1"
+                                            ></i>
+                                            Filter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end card-->
                         <div class="card">
                             <div class="card-body">
                                 <div class="table-responsive table-card">
@@ -109,110 +174,14 @@
                                                     </div>
                                                 </th>
                                                 <th class="sort cursor-pointer">
-                                                    Title
+                                                    Brand Name
                                                 </th>
                                                 <th class="sort cursor-pointer">
-                                                    Category
+                                                    Status
                                                 </th>
-                                                <th class="sort cursor-pointer">
-                                                    Action
-                                                </th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody class="list">
-                                            <% if(!attributes[0]) { %>
-                                            <tr>
-                                                <td
-                                                    colspan="100%"
-                                                    class="text-center"
-                                                >
-                                                    No Data
-                                                </td>
-                                            </tr>
-                                            <% } else {%> <%
-                                            attributes.forEach(function(attributes){%>
-                                            <tr>
-                                                <td>
-                                                    <div class="form-check">
-                                                        <input
-                                                            class="form-check-input"
-                                                            type="checkbox"
-                                                            name="chk_child"
-                                                        />
-                                                        <label
-                                                            class="form-check-label"
-                                                        ></label>
-                                                    </div>
-                                                </td>
-                                                <td class="title">
-                                                    <%= attributes.title?
-                                                    attributes.title: ''%>
-                                                </td>
-                                                <td class="category">
-                                                    <%= attributes.category_id?
-                                                    attributes.category_id.name:
-                                                    ''%>
-                                                </td>
-                                                <td>
-                                                    <div
-                                                        class="dropdown position-static"
-                                                    >
-                                                        <button
-                                                            class="btn btn-subtle-secondary btn-sm btn-icon"
-                                                            role="button"
-                                                            data-bs-toggle="dropdown"
-                                                            aria-expanded="false"
-                                                        >
-                                                            <i
-                                                                class="bi bi-three-dots-vertical"
-                                                            ></i>
-                                                        </button>
-
-                                                        <ul
-                                                            class="dropdown-menu dropdown-menu-end"
-                                                        >
-                                                            <!-- <li>
-                                                                <a
-                                                                    class="dropdown-item"
-                                                                    href="apps-ecommerce-product-details.html"
-                                                                    ><i
-                                                                        class="ph-eye align-middle me-1"
-                                                                    ></i>
-                                                                    View</a
-                                                                >
-                                                            </li> -->
-                                                            <!-- <li>
-                                                                <a
-                                                                    class="dropdown-item edit-item-btn"
-                                                                    data-bs-toggle="modal"
-                                                                    data-name="Category"
-                                                                    href="#showEditModal"
-                                                                    id="edit_btn"
-                                                                    data-model="<%= JSON.stringify(attributes) %>"
-                                                                    ><i
-                                                                        class="ph-pencil align-middle me-1"
-                                                                    ></i>
-                                                                    Edit
-                                                                </a>
-                                                            </li> -->
-                                                            <li>
-                                                                <a
-                                                                    class="dropdown-item remove-item-btn"
-                                                                    data-bs-toggle="modal"
-                                                                    href="#deleteRecordModal"
-                                                                    data-id="<%= attributes._id %>"
-                                                                    ><i
-                                                                        class="ph-trash align-middle me-1"
-                                                                    ></i>
-                                                                    Remove</a
-                                                                >
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <% }); %> <% } %>
-                                        </tbody>
                                     </table>
                                 </div>
                                 <div class="noresult" style="display: none">
@@ -278,7 +247,7 @@
 </div>
 <!-- END layout-wrapper -->
 
-<!-- Add Attributes Modal -->
+<!-- Add Category Modal -->
 <div
     class="modal fade"
     id="showModal"
@@ -289,9 +258,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header bg-light p-3">
-                <h5 class="modal-title" id="exampleModalLabel">
-                    Add Attributes
-                </h5>
+                <h5 class="modal-title" id="exampleModalLabel">Add Brand</h5>
                 <button
                     type="button"
                     class="btn-close"
@@ -302,36 +269,35 @@
             </div>
             <form class="tablelist-form" id="submitForm">
                 <div class="modal-body">
-                    <div
-                        id="alert-error-msg"
-                        class="d-none alert alert-danger py-2"
-                    ></div>
-
                     <input type="hidden" id="id-field" />
 
+                    <div class="text-center mb-3"></div>
                     <div class="mb-3">
-                        <label for="name-field" class="form-label">Title</label>
+                        <label for="brandname-field" class="form-label"
+                            >Brand Name</label
+                        >
                         <input
                             type="text"
-                            id="title-field"
+                            id="brandname-field"
                             class="form-control"
-                            name="title"
-                            placeholder="Enter Title"
+                            name="name"
+                            placeholder="Enter Brand name"
                         />
                     </div>
-                    <div class="mb-3">
-                        <label for="Category-field" class="form-label"
-                            >Category</label
+
+                    <div>
+                        <label for="status-field" class="form-label"
+                            >Status</label
                         >
                         <select
                             class="form-control"
-                            id="category-field"
-                            name="category_id"
+                            id="status-field"
+                            name="status_id"
                         >
                             <option value="" disabled selected>
-                                Select Category
+                                Select Status
                             </option>
-                            <%categories.forEach(function(element){ %>
+                            <%statuses.forEach(function(element){ %>
                             <option value="<%= element._id %>">
                                 <%= element.name%>
                             </option>
@@ -353,7 +319,7 @@
                             class="btn btn-success"
                             id="add-btn"
                         >
-                            Add Attribute
+                            Add Brand
                         </button>
                     </div>
                 </div>
@@ -361,64 +327,19 @@
         </div>
     </div>
 </div>
-<!-- end Add Attributes Modal -->
+<!-- end Add Category Modal -->
+
+<!-- Edit Category Modal -->
+
+<!-- end Add Category Modal -->
 
 <!-- deleteRecordModal -->
-<div
-    id="deleteRecordModal"
-    class="modal fade zoomIn"
-    tabindex="-1"
-    aria-hidden="true"
->
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button
-                    type="button"
-                    class="btn-close"
-                    id="deleteRecord-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"
-                ></button>
-            </div>
-            <div class="modal-body p-md-5">
-                <div class="text-center">
-                    <div class="text-danger">
-                        <i class="bi bi-trash display-4"></i>
-                    </div>
-                    <div class="mt-4">
-                        <h3 class="mb-2">Are you sure ?</h3>
-                        <p class="text-muted fs-lg mx-3 mb-0">
-                            Are you sure you want to remove this record ?
-                        </p>
-                    </div>
-                </div>
-                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
-                    <button
-                        type="button"
-                        class="btn w-sm btn-light btn-hover"
-                        data-bs-dismiss="modal"
-                    >
-                        Close
-                    </button>
-                    <button
-                        type="button"
-                        class="btn w-sm btn-danger btn-hover"
-                        id="delete-record"
-                    >
-                        Yes, Delete It!
-                    </button>
-                </div>
-            </div>
-        </div>
-        <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-</div>
+
 <!-- /deleteRecordModal -->
 
 <%- include('partials/footer.ejs') %>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     var addform = $("#submitForm");
     addform.on("submit", submitFormHandler);
@@ -430,7 +351,7 @@
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: "/admin/attribute/add",
+            url: "/admin/brand/add",
             data: JSON.stringify(formData),
         })
             .done((res) => {
@@ -459,48 +380,4 @@
                 });
             });
     }
-
-    //#region Delete attribute-sets
-    let idToDelete;
-    $(document).ready(function () {
-        // Show the modal and store the status ID to delete
-        $(".remove-item-btn").click(function () {
-            idToDelete = $(this).data("id");
-        });
-
-        // AJAX request to delete the status
-        $("#delete-record").click(function () {
-            $.ajax({
-                type: "POST",
-                contentType: "application/json",
-                url: "/admin/attribute/delete/" + idToDelete,
-            })
-                .done((res) => {
-                    if (res.status == 200) {
-                        iziToast.success({
-                            title: "Success",
-                            message: res.message,
-                            position: "topRight",
-                        });
-                        setTimeout(function () {
-                            location.reload();
-                        }, 1000);
-                    } else {
-                        iziToast.error({
-                            title: "Error",
-                            message: res.message,
-                            position: "topRight",
-                        });
-                    }
-                })
-                .fail(function (xhr, status, error) {
-                    iziToast.error({
-                        title: "Error",
-                        message: xhr.responseText,
-                        position: "topRight",
-                    });
-                });
-        });
-    });
-    //#endregion Delete attribute-sets
 </script>
