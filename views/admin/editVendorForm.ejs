@@ -1,0 +1,519 @@
+<%- include('partials/header.ejs') %>
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <!-- Start right Content here -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div
+                            class="page-title-box d-sm-flex align-items-center justify-content-between"
+                        >
+                            <h4 class="mb-sm-0">Edit Vendor details</h4>
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="javascript: void(0);"
+                                            >Dashboard</a
+                                        >
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Vendor Information
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div
+                                    class="d-flex align-items-center flex-wrap gap-3"
+                                >
+                                    <div class="flex-grow-1">
+                                        <h3 class="card-title mb-0">
+                                            Vendor Information List
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+
+                <div class="form-with-tabs">
+                    <div class="card">
+                        <ul
+                            class="nav nav-pills user-profile-tab border-bottom"
+                            id="pills-tab"
+                            role="tablist"
+                        >
+                            <li class="nav-item mb-3 ml-3" role="presentation">
+                                <button
+                                    class="nav-link position-relative rounded-0 active d-flex align-items-center justify-content-center fs-4 py-6 fw-semibold bg-"
+                                    id="pills-personal-info-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-personal-info"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="pills-personal-info"
+                                    aria-selected="true"
+                                >
+                                    Personal Info
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button
+                                    class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center fs-4 py-6 fw-semibold"
+                                    id="pills-account-details-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-account-details"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="pills-account-details"
+                                    aria-selected="false"
+                                >
+                                    Account Details
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button
+                                    class="nav-link position-relative rounded-0 d-flex align-items-center justify-content-center fs-4 py-6 fw-semibold"
+                                    id="pills-social-links-tab"
+                                    data-bs-toggle="pill"
+                                    data-bs-target="#pills-social-links"
+                                    type="button"
+                                    role="tab"
+                                    aria-controls="pills-social-links"
+                                    aria-selected="false"
+                                >
+                                    Social Links
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="card-body p-4">
+                            <div class="tab-content" id="pills-tabContent">
+                                <div
+                                    class="tab-pane fade show active"
+                                    id="pills-personal-info"
+                                    role="tabpanel"
+                                    aria-labelledby="pills-personal-info-tab"
+                                    tabindex="0"
+                                >
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputFullName"
+                                                    class="form-label fw-semibold"
+                                                    >First Name</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="John"
+                                                />
+                                            </div>
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputFullName"
+                                                    class="form-label fw-semibold"
+                                                    >Full Name</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="John"
+                                                />
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Additional Info</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="John is the best guy"
+                                                />
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Additional 1</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="John is the best guy"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputLastName"
+                                                    class="form-label fw-semibold"
+                                                    >Last Name</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="John"
+                                                />
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputEmail"
+                                                    class="form-label fw-semibold"
+                                                    >Email</label
+                                                >
+                                                <input
+                                                    type="email"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="John"
+                                                />
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Pin Code</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="John is the best guy"
+                                                />
+                                            </div>
+
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Additional 2</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="John is the best guy"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div
+                                                class="d-flex align-items-center gap-3"
+                                            >
+                                                <button class="btn btn-primary">
+                                                    Submit
+                                                </button>
+                                                <button
+                                                    class="btn btn-light-danger text-danger"
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="tab-pane fade"
+                                    id="pills-account-details"
+                                    role="tabpanel"
+                                    aria-labelledby="pills-account-details-tab"
+                                    tabindex="0"
+                                >
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <!-- Column 1 -->
+                                            <div class="space-y-4">
+                                                <!-- Aadhaar Card Front -->
+                                                <div
+                                                    class="p-4 bg-white rounded shadow-md"
+                                                >
+                                                    <label
+                                                        for="aadhaarFrontImage"
+                                                        class="form-label fw-semibold mb-2 block"
+                                                        >Aadhaar Card
+                                                        Front</label
+                                                    >
+                                                    <div
+                                                        class="flex items-center space-x-2"
+                                                    >
+                                                        <!-- Image Preview -->
+                                                        <div
+                                                            id="aadhaarFrontPreview"
+                                                            class="relative w-[10px] h-[10px] overflow-hidden rounded cursor-pointer border border-gray-300 hover-scale-3 bg-gray-200"
+                                                        >
+                                                            <!-- Preview image will be displayed here -->
+                                                        </div>
+                                                        <!-- Image Input -->
+                                                        <input
+                                                            type="file"
+                                                            id="aadhaarFrontImage"
+                                                            class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+                                                            accept="image/*"
+                                                            onchange="previewImage(event, 'aadhaarFrontPreview')"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <!-- Aadhaar Card Back -->
+                                                <div
+                                                    class="p-4 bg-white rounded shadow-md"
+                                                >
+                                                    <label
+                                                        for="aadhaarBackImage"
+                                                        class="form-label fw-semibold mb-2 block"
+                                                        >Aadhaar Card
+                                                        Back</label
+                                                    >
+                                                    <div
+                                                        class="flex items-center space-x-2"
+                                                    >
+                                                        <!-- Image Preview -->
+                                                        <div
+                                                            id="aadhaarBackPreview"
+                                                            class="relative w-[10px] h-[10px] overflow-hidden rounded cursor-pointer border border-gray-300 hover-scale-3 bg-gray-200"
+                                                        >
+                                                            <!-- Preview image will be displayed here -->
+                                                        </div>
+                                                        <!-- Image Input -->
+                                                        <input
+                                                            type="file"
+                                                            id="aadhaarBackImage"
+                                                            class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+                                                            accept="image/*"
+                                                            onchange="previewImage(event, 'aadhaarBackPreview')"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Column 2 -->
+                                            <div class="space-y-4">
+                                                <!-- PAN Card Front -->
+                                                <div
+                                                    class="p-4 bg-white rounded shadow-md"
+                                                >
+                                                    <label
+                                                        for="panFrontImage"
+                                                        class="form-label fw-semibold mb-2 block"
+                                                        >PAN Card Front</label
+                                                    >
+                                                    <div
+                                                        class="flex items-center space-x-2"
+                                                    >
+                                                        <!-- Image Preview -->
+                                                        <div
+                                                            id="panFrontPreview"
+                                                            class="relative w-[10px] h-[10px] overflow-hidden rounded cursor-pointer border border-gray-300 hover-scale-3 bg-gray-200"
+                                                        >
+                                                            <!-- Preview image will be displayed here -->
+                                                        </div>
+                                                        <!-- Image Input -->
+                                                        <input
+                                                            type="file"
+                                                            id="panFrontImage"
+                                                            class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+                                                            accept="image/*"
+                                                            onchange="previewImage(event, 'panFrontPreview')"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <!-- Signature -->
+                                                <div
+                                                    class="p-4 bg-white rounded shadow-md"
+                                                >
+                                                    <label
+                                                        for="signatureImage"
+                                                        class="form-label fw-semibold mb-2 block"
+                                                        >Signature</label
+                                                    >
+                                                    <div
+                                                        class="flex items-center space-x-2"
+                                                    >
+                                                        <!-- Image Preview -->
+                                                        <div
+                                                            id="signaturePreview"
+                                                            class="relative w-[10px] h-[10px] overflow-hidden rounded cursor-pointer border border-gray-300 hover-scale-3 bg-gray-200"
+                                                        >
+                                                            <!-- Preview image will be displayed here -->
+                                                        </div>
+                                                        <!-- Image Input -->
+                                                        <input
+                                                            type="file"
+                                                            id="signatureImage"
+                                                            class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+                                                            accept="image/*"
+                                                            onchange="previewImage(event, 'signaturePreview')"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    class="tab-pane fade"
+                                    id="pills-social-links"
+                                    role="tabpanel"
+                                    aria-labelledby="pills-social-links-tab"
+                                    tabindex="0"
+                                >
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Twitter</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="https://twitter.com/abc"
+                                                />
+                                            </div>
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Google</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="https://plus.google.com/abc"
+                                                />
+                                            </div>
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Instagram</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="https://instagram.com/abc"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Facebook</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="https://facebook.com/abc"
+                                                />
+                                            </div>
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Linkedin</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="https://linkedin.com/abc"
+                                                />
+                                            </div>
+                                            <div class="mb-4">
+                                                <label
+                                                    for="exampleInputPassword1"
+                                                    class="form-label fw-semibold"
+                                                    >Quora</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    id="exampleInputtext"
+                                                    placeholder="https://quora.com/abc"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div
+                                                class="d-flex align-items-center gap-3"
+                                            >
+                                                <button class="btn btn-primary">
+                                                    Submit
+                                                </button>
+                                                <button
+                                                    class="btn btn-light-danger text-danger"
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--end row-->
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+    </div>
+    <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+
+<%- include('partials/footer.ejs') %>
+
+<script>
+    function previewImage(event) {
+        const files = event.target.files;
+        const imagePreview = document.getElementById("imagePreview");
+
+        if (files && files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imagePreview.style.backgroundImage = `url(${e.target.result})`;
+                imagePreview.style.backgroundSize = "cover";
+                imagePreview.style.backgroundPosition = "center";
+            };
+            reader.readAsDataURL(files[0]);
+        }
+    }
+</script>

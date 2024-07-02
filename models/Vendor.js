@@ -40,11 +40,11 @@ const schema = new mongoose.Schema({
         type: String,
     },
     created_at: {
-        type: String,
+        type: Date,
         default: Date.now,
     },
     updated_at: {
-        type: String,
+        type: Date,
         default: Date.now,
     },
 });

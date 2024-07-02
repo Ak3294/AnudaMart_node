@@ -1,0 +1,543 @@
+
+
+<%- include('partials/header.ejs') %>
+<!-- Begin page -->
+<div id="layout-wrapper">
+    <!-- Start right Content here -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div
+                            class="page-title-box d-sm-flex align-items-center justify-content-between"
+                        >
+                            <h4 class="mb-sm-0">Venders</h4>
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="javascript: void(0);"
+                                            >Dashboard</a
+                                        >
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Venders
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div
+                                    class="d-flex align-items-center flex-wrap gap-3"
+                                >
+                                    <div class="flex-grow-1">
+                                        <h3 class="card-title mb-0">
+                                            Vender List
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+
+                <div class="row" id="customer-list">
+                    <div class="col-xxl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row gy-3">
+                                    <div class="col-xl-4">
+                                        <div class="search-box">
+                                            <input
+                                                type="text"
+                                                class="form-control search"
+                                                placeholder="Search customer, email etc..."
+                                            />
+                                            <i
+                                                class="ri-search-line search-icon"
+                                            ></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4">
+                                        <div>
+                                            <select
+                                                class="form-control"
+                                                id="idStatus"
+                                                data-choices
+                                                data-choices-search-false
+                                            >
+                                                <option value="all">
+                                                    All Select
+                                                </option>
+                                                <option value="Active">
+                                                    Active
+                                                </option>
+                                                <option value="Unactive">
+                                                    Unactive
+                                                </option>
+                                                <option value="Block">
+                                                    Block
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 ">
+                                        <input
+                                            id="daterangeInput"
+                                            class="py-2 px-14 border-sm rounded-1"
+                                            type="text"
+                                            name="daterange"
+                                            value="01/01/2018 - 01/15/2018"
+                                        />
+                                    </div>
+                                    <div class="col-xl-2 col-md-4">
+                                        <button
+                                            class="btn btn-subtle-primary w-100"
+                                            onclick="filterData()"
+                                        >
+                                            <i
+                                                class="bi bi-funnel align-baseline me-1"
+                                            ></i>
+                                            Filter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end card-->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive table-card">
+                                    <table
+                                        class="table align-middle table-nowrap"
+                                        id="userTableBody"
+                                    >
+                                        <thead>
+                                            <tr>
+                                                <th class="sort cursor-pointer">
+                                                    #
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Name
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Email
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    DOB
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Phone
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Status
+                                                </th>
+                                                 <th class="" >Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="userTableBody">
+                                            <% users.forEach((user, index) => {
+                                            %>
+                                            <tr data-id="<%= user._id %>">
+                                                <td><%= index + 1 %></td>
+                                                <td class="name">
+                                                    <%= user.name %>
+                                                </td>
+                                                <td class="email">
+                                                    <%= user.email %>
+                                                </td>
+                                                <td class="dob">
+                                                    <%= user.dob %>
+                                                </td>
+                                                <td class="phone">
+                                                    <%= user.phone %>
+                                                </td>
+                                                <td class="status">
+                                                    <td >
+                                                        <button class="status-btn px-3 py-1 text-sm font-medium text-white rounded-full bg-green-500 toggle-btn">Active</button>
+                                                    </td>
+                                                </td>
+                                                <td class="flex items-center justify-between">
+                                                    <div class="dropdown">
+                                                        <a href="/admin/vendor/editvendor?vendorId=<%= user._id %>">
+                                                            <button class="bg-[#DDDDDE] hover:bg-[#1E1A22] w-7 h-7 rounded-1 hover:text-[#FFFFFF]" type="button">
+                                                                <i class="bi bi-pencil"></i>
+                                                            </button>
+                                                        </a>
+                                                        <button class="btn btn-subtle-secondary btn-icon w-7 h-7 rounded-1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                            <i class="bi bi-three-dots-vertical"></i>
+                                                        </button>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
+                                                            <li>
+                                                                <a class="dropdown-item edit-item-btn" href="#showEditModal" data-bs-toggle="modal" data-id="<%= user._id %>">
+                                                                    <i class="ph-pencil align-middle me-1"></i> View
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item ban-item-btn  btn btn-danger" href="javascript:void(0);" data-id="1">
+                                                                    <i class="bi bi-pencil align-middle me-1"></i> Ban this vendor
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="noresult" style="display: none">
+                                    <div class="text-center py-4">
+                                        <i
+                                            class="ph-magnifying-glass fs-1 text-primary"
+                                        ></i>
+                                        <h5 class="mt-2">
+                                            Sorry! No Result Found
+                                        </h5>
+                                        <p class="text-muted mb-0">
+                                            We've searched more than 150+
+                                            customers We did not find any
+                                            customers for you search.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div
+                                    class="align-items-center mt-4 justify-content-between row text-center text-sm-start"
+                                    id="pagination-element"
+                                >
+                                    <div class="col-sm">
+                                        <div class="text-muted">
+                                            Showing
+                                            <span class="fw-semibold">10</span>
+                                            of
+                                            <span class="fw-semibold">13</span>
+                                            Results
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                        <div
+                                            class="pagination-wrap hstack gap-2"
+                                        >
+                                            <a
+                                                class="page-item pagination-prev disabled"
+                                                href="javascript:void(0)"
+                                                >Previous</a
+                                            >
+                                            <ul
+                                                class="pagination listjs-pagination mb-0"
+                                            ></ul>
+                                            <a
+                                                class="page-item pagination-next"
+                                                href="javascript:void(0)"
+                                                >Next</a
+                                            >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+    </div>
+    <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+
+
+<!-- Edit Modal Starts -->
+<div
+    class="modal fade"
+    id="editVendorModal"
+    tabindex="-1"
+    aria-labelledby="editBrandModalLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editBrandModalLabel">Edit Brand</h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <div class="modal-body">
+                <!-- Aadhaar Front Photo -->
+                <div class="mb-3">
+                    <label for="aadhaar-front-photo" class="form-label">Aadhaar Front Photo</label>
+                    <input type="file" id="aadhaar-front-photo" class="form-control" name="aadhaar_front_photo">
+                </div>
+
+                <!-- Aadhaar Back Photo -->
+                <div class="mb-3">
+                    <label for="aadhaar-back-photo" class="form-label">Aadhaar Back Photo</label>
+                    <input type="file" id="aadhaar-back-photo" class="form-control" name="aadhaar_back_photo">
+                </div>
+
+                <!-- Aadhaar Number -->
+                <div class="mb-3">
+                    <label for="aadhaar-number" class="form-label">Aadhaar Number</label>
+                    <input type="number" id="aadhaar-number" class="form-control" name="aadhaar_number" minlength="12" maxlength="12">
+                </div>
+
+                <!-- PAN Card Front Photo -->
+                <div class="mb-3">
+                    <label for="pan-card-front-photo" class="form-label">PAN Card Front Photo</label>
+                    <input type="file" id="pan-card-front-photo" class="form-control" name="pan_card_front_photo">
+                </div>
+
+                <!-- PAN Number -->
+                <div class="mb-3">
+                    <label for="pan-number" class="form-label">PAN Number</label>
+                    <input type="text" id="pan-number" class="form-control" name="pan_number">
+                </div>
+
+                <!-- GST Number -->
+                <div class="mb-3">
+                    <label for="gst-number" class="form-label">GST Number</label>
+                    <input type="text" id="gst-number" class="form-control" name="gst_number">
+                </div>
+
+                <!-- Signature Photo -->
+                <div class="mb-3">
+                    <label for="signature-photo" class="form-label">Signature Photo</label>
+                    <input type="file" id="signature-photo" class="form-control" name="signature_photo">
+                </div>
+
+                <!-- Account Holder Name -->
+                <div class="mb-3">
+                    <label for="account-holder-name" class="form-label">Account Holder Name</label>
+                    <input type="text" id="account-holder-name" class="form-control" name="account_holder_name">
+                </div>
+
+                <!-- IFSC Code -->
+                <div class="mb-3">
+                    <label for="ifsc-code" class="form-label">IFSC Code</label>
+                    <input type="text" id="ifsc-code" class="form-control" name="ifsc_code">
+                </div>
+
+                <!-- Bank Name -->
+                <div class="mb-3">
+                    <label for="bank-name" class="form-label">Bank Name</label>
+                    <input type="text" id="bank-name" class="form-control" name="bank_name">
+                </div>
+
+                <!-- Account Number -->
+                <div class="mb-3">
+                    <label for="account-number" class="form-label">Account Number</label>
+                    <input type="text" id="account-number" class="form-control" name="account_number" maxlength="16">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button
+                    type="button"
+                    class="btn btn-light"
+                    data-bs-dismiss="modal"
+                >
+                    Close
+                </button>
+                <button
+                    type="button"
+                    class="btn btn-success"
+                    id="edit-brand-btn"
+                >
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Edit Modal ends -->
+
+<!-- deleteRecordModal -->
+<div id="deleteRecordModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-md-5">
+                <div class="text-center">
+                    <div class="text-danger">
+                        <i class="bi bi-trash display-4"></i>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="mb-2">Are you sure?</h3>
+                        <p class="text-muted fs-lg mx-3 mb-0">
+                            Are you sure you want to Ban this Vendor?
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                    <button type="button" class="btn w-sm btn-light btn-hover" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn w-sm btn-danger btn-hover" id="confirm-ban-btn">
+                        Yes, Ban this.
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /deleteRecordModal -->
+
+<%- include('partials/footer.ejs') %>
+
+<script 
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"
+></script>
+<script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"
+></script>
+<script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"
+></script>
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+/>
+<script>
+    $(document).ready(function () {
+        // Function to perform search
+        $(".search").on("keyup", function () {
+            var searchText = $(this).val().toLowerCase();
+
+            $("#userTableBody tr").each(function () {
+                var name = $(this).find(".name").text().toLowerCase();
+                var email = $(this).find(".email").text().toLowerCase();
+
+                if (name.includes(searchText) || email.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            // Show/hide no results found message
+            if ($("#userTableBody tr:visible").length > 0) {
+                $(".noresult").hide();
+            } else {
+                $(".noresult").show();
+            }
+        });
+    });
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/bootstrap-daterangepicker@4.1.0/daterangepicker.js"
+></script>
+
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-daterangepicker@4.1.0/daterangepicker.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#daterangeInput').daterangepicker(
+            {
+                opens: 'left',
+                locale: {
+                    format: 'MM/DD/YYYY'
+                }
+            },
+            function (start, end) {
+                // Format dates for API request
+                const startDate = start.format('YYYY-MM-DD');
+                const endDate = end.format('YYYY-MM-DD');
+
+                // Make API request to fetch users based on date range
+                axios
+                    .get(`/venders?startDate=${startDate}&endDate=${endDate}`)
+                    .then((response) => {
+                        const users = response.data.users;
+                        updateTable(users);
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching users:', error);
+                    });
+            }
+        );
+    });
+    
+        
+    document.querySelectorAll(".toggle-btn").forEach((button) => {
+        button.addEventListener("click", () => {
+            if (button.classList.contains("bg-green-500")) {
+                button.classList.remove("bg-green-500");
+                button.classList.add("bg-red-500");
+                button.textContent = "Inactive";
+            } else {
+                button.classList.remove("bg-red-500");
+                button.classList.add("bg-green-500");
+                button.textContent = "Active";
+            }
+        });
+    });
+
+    // JavaScript to handle "Ban this vendor" action
+    $(document).ready(function() {
+        let currentStatusButton; // Variable to keep track of the current status button
+
+        // Open the modal on "Ban this vendor" button click
+        $('.ban-item-btn').on('click', function() {
+            // Store the closest status button for later use
+            currentStatusButton = $(this).closest('tr').find('.status-btn');
+
+            // Open the modal
+            $('#deleteRecordModal').modal('show');
+        });
+
+        // Handle the confirmation of banning the vendor
+        $('#confirm-ban-btn').on('click', function() {
+            if (currentStatusButton) {
+                // Change text to 'Banned' and update classes for grey background
+                currentStatusButton.text('Banned').removeClass('bg-green-500').addClass('bg-gray-300 text-black');
+
+                // Close the modal
+                $('#deleteRecordModal').modal('hide');
+            }
+        });
+    });
+
+    
+
+
+    
+</script>
+
+<script>
+    
+    function formatDate(dateString) {
+        const options = { day: 'numeric', month: 'short', year: 'numeric' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', options);
+    }
+</script>

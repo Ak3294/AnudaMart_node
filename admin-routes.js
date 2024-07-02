@@ -6,6 +6,9 @@ const status = require("./routes/admin/status");
 const attributeSets = require("./routes/admin/attributeSets");
 const attributeValues = require("./routes/admin/attributeValues");
 const brand = require("./routes/admin/brand");
+// const product = require("./routes/admin/product");
+const user = require("./routes/admin/user");
+const vendor = require("./routes/admin/vendor");
 
 const AdminRoutes = (app) => {
     app.use("/", mainR);
@@ -16,6 +19,9 @@ const AdminRoutes = (app) => {
     app.use("/admin/attribute", attributeSets);
     app.use("/admin/attribute-values", attributeValues);
     app.use("/admin/brand", brand);
+    // app.use("/admin/product", product);
+    app.use("/admin/user", user);
+    app.use("/admin/vendor", vendor);
 };
 
 module.exports = AdminRoutes;
