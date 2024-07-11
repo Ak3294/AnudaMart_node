@@ -1,0 +1,544 @@
+<%- include('partials/header.ejs') %><!-- Begin page -->
+<div id="layout-wrapper">
+    <!-- Start right Content here -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid p-2">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div
+                            class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0">Edit Vendor details</h4>
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item">
+                                        <a
+                                            href="javascript: void(0);">Dashboard</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Vendor Information
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div
+                                    class="d-flex align-items-center flex-wrap gap-3">
+                                    <div class="flex-grow-1">
+                                        <h3 class="card-title mb-2">
+                                            Vendor Information List
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+
+                <div class="d-flex align-items-center flex-wrap gap-2 mb-4 ">
+                    <ul class="nav nav-pills arrow-navtabs nav-secondary gap-2 flex-grow-1 order-2 order-lg-1"
+                        role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" data-bs-toggle="tab"
+                                href="#personalInfo" role="tab"
+                                aria-selected="false" tabindex="-1">
+                                Personal Info
+                            </a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" data-bs-toggle="tab"
+                                href="#accountDetails" role="tab"
+                                aria-selected="true">
+                                Account Details
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card p-4" id="EditVendorForm">
+                    <div class="tab-content">
+                        <!-- Personal Info -->
+                        <div class="tab-pane active" id="personalInfo"
+                            role="tabpanel">
+                            <div class="card-header">
+                                <h6 class="card-title mb-4">Personal Information
+                                </h6>
+                            </div>
+                            <div class="row mt-3 p-4">
+                                <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label for="exampleInputFirstName"
+                                            class="form-label fw-semibold">First
+                                            Name</label>
+                                        <input type="text" class="form-control"
+                                            id="exampleInputFirstName"
+                                            placeholder="John" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="exampleInputFullName"
+                                            class="form-label fw-semibold">Full
+                                            Name</label>
+                                        <input type="text" class="form-control"
+                                            id="exampleInputFullName"
+                                            placeholder="John Doe" />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="exampleInputAdditionalInfo"
+                                            class="form-label fw-semibold">Additional
+                                            Info</label>
+                                        <input type="text" class="form-control"
+                                            id="exampleInputAdditionalInfo"
+                                            placeholder="" />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="exampleInputPhone"
+                                            class="form-label fw-semibold">Phone
+                                        </label>
+                                        <input type="text" class="form-control"
+                                            id="exampleInputPhone"
+                                            placeholder="" />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="exampleInputAddress"
+                                            class="form-label fw-semibold">Address
+                                        </label>
+                                        <input type="text" class="form-control"
+                                            id="exampleInputAddress"
+                                            placeholder="" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="mb-4">
+                                        <label for="exampleInputLastName"
+                                            class="form-label fw-semibold">Last
+                                            Name</label>
+                                        <input type="text" class="form-control"
+                                            id="exampleInputLastName"
+                                            placeholder="Doe" />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="exampleInputEmail"
+                                            class="form-label fw-semibold">Email</label>
+                                        <input type="email" class="form-control"
+                                            id="exampleInputEmail"
+                                            placeholder="johndoe@gmail.com" />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="exampleInputPinCode"
+                                            class="form-label fw-semibold">Pin
+                                            Code</label>
+                                        <input type="text" class="form-control"
+                                            id="exampleInputPinCode"
+                                            placeholder="3118056" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="exampleInputDOB"
+                                            class="form-label fw-semibold">DOB
+                                        </label>
+                                        <input type="date" class="form-control"
+                                            id="exampleInputDOB"
+                                            placeholder="" />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="exampleInputAddress2"
+                                            class="form-label fw-semibold">Address
+                                            2</label>
+                                        <input type="text" class="form-control"
+                                            id="exampleInputAddress2"
+                                            placeholder="" />
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Account details  -->
+                        <div class="tab-pane" id="accountDetails"
+                            role="tabpanel">
+                            <div class="card-header">
+                                <h6 class="card-title mb-2">Account Details
+                                </h6>
+                            </div>
+                            <div class="row">
+                                <div
+                                    class="col-lg-12 flex justify-center items-center">
+                                    <div class="space-y-4 ">
+                                        <!-- Aadhaar Card Front -->
+                                        <div
+                                            class="p-4 bg-white rounded shadow-md align-items">
+                                            <label for="vendorImage"
+                                                class="form-label fw-semibold mb-2 block">Vendor
+                                                Image
+                                            </label>
+                                            <div
+                                                class="d-flex align-items-center">
+                                                <input type="file"
+                                                    id="vendorImage"
+                                                    class="form-control block w-1/5 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+                                                    accept="image/*"
+                                                    onchange="previewImage(event, 'vendorPreview')" />
+                                            </div>
+                                            <div class="flex-shrink-0 me-2 mt-3 hidden"
+                                                id="vendorPreviewContainer">
+                                                <div>
+                                                    <img id="vendorPreview vendorPreviewContainer"
+                                                        class="avatar-lg border customer-image-elem"
+                                                        src="#"
+                                                        alt="Vendor Preview" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-lg-6">
+                                    <!-- Column 1 -->
+                                    <div class="space-y-4">
+                                        <!-- Aadhaar Card Front -->
+                                        <div
+                                            class="p-4 bg-white rounded shadow-md">
+                                            <label for="aadhaarFrontImage"
+                                                class="form-label fw-semibold mb-2 block">Aadhaar
+                                                Card Front</label>
+                                            <div
+                                                class="d-flex align-items-center">
+                                                <input type="file"
+                                                    id="aadhaarFrontImage"
+                                                    class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+                                                    accept="image/*"
+                                                    onchange="previewImage(event, 'aadhaarFrontPreview')" />
+                                            </div>
+                                            <div
+                                                class="flex-shrink-0 me-2 mt-3">
+                                                <div>
+                                                    <img id="aadhaarFrontPreview"
+                                                        class="avatar-lg border customer-image-elem"
+                                                        src=""
+                                                        alt="Aadhaar Front Preview" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Aadhaar Card Back -->
+                                        <div
+                                            class="p-4 bg-white rounded shadow-md">
+                                            <label for="aadhaarBackImage"
+                                                class="form-label fw-semibold mb-2 block">Aadhaar
+                                                Card Back</label>
+                                            <div
+                                                class="d-flex align-items-center">
+                                                <input type="file"
+                                                    id="aadhaarBackImage"
+                                                    class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+                                                    accept="image/*"
+                                                    onchange="previewImage(event, 'aadhaarBackPreview')" />
+                                            </div>
+                                            <div
+                                                class="flex-shrink-0 me-2 mt-3">
+                                                <div>
+                                                    <img id="aadhaarBackPreview"
+                                                        class="avatar-lg border customer-image-elem"
+                                                        src=""
+                                                        alt="Aadhaar Back Preview" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Column 2 -->
+                                <div class="col-lg-6">
+                                    <div class="space-y-4">
+                                        <!-- PAN Card Front -->
+                                        <div
+                                            class="p-4 bg-white rounded shadow-md">
+                                            <label for="panFrontImage"
+                                                class="form-label fw-semibold mb-2 block">Pan
+                                                Card Front</label>
+                                            <div
+                                                class="d-flex align-items-center">
+                                                <input type="file"
+                                                    id="panFrontImage"
+                                                    class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+                                                    accept="image/*"
+                                                    onchange="previewImage(event, 'panFrontPreview')" />
+                                            </div>
+                                            <div
+                                                class="flex-shrink-0 me-2 mt-3">
+                                                <div>
+                                                    <img id="panFrontPreview"
+                                                        class="avatar-lg border customer-image-elem"
+                                                        src=""
+                                                        alt="Pan Front Preview" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Signature -->
+                                        <div
+                                            class="p-4 bg-white rounded shadow-md">
+                                            <label for="signatureImage"
+                                                class="form-label fw-semibold mb-2 block">Vendor
+                                                Signature</label>
+                                            <div
+                                                class="d-flex align-items-center">
+                                                <input type="file"
+                                                    id="signatureImage"
+                                                    class="form-control block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300"
+                                                    accept="image/*"
+                                                    onchange="previewImage(event, 'signaturePreview')" />
+                                            </div>
+                                            <div
+                                                class="flex-shrink-0 me-2 mt-3">
+                                                <div>
+                                                    <img id="signaturePreview"
+                                                        class="avatar-lg border customer-image-elem"
+                                                        src=""
+                                                        alt="Signature Preview" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class=" col-lg-6 p-4 ml-3">
+                                    <div class="mb-4">
+                                        <label for="aadhaarnumber"
+                                            class="form-label fw-semibold">Aadhaar
+                                            Number
+                                        </label>
+                                        <input type="text" class="form-control"
+                                            id="aadhaarnumber"
+                                            placeholder="4353534534XXXX" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="panCardNumber"
+                                            class="form-label fw-semibold">Pan
+                                            Card Number
+                                        </label>
+                                        <input type="text" class="form-control"
+                                            id="panCardNumber"
+                                            placeholder="HP4535XX544XX" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="bankname"
+                                            class="form-label fw-semibold">Bank
+                                            Name
+                                        </label>
+                                        <input type="text" class="form-control"
+                                            id="bankname"
+                                            placeholder="ICICI Bank" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="ifscCode"
+                                            class="form-label fw-semibold">IFSC
+                                            Code
+                                        </label>
+                                        <input type="text" class="form-control"
+                                            id="ifscCode"
+                                            placeholder="BARB0435XXX" />
+                                    </div>
+
+
+                                </div>
+
+                                <div class="col-lg-6 6 p-4 ml-3">
+                                    <div class="mb-4 ">
+                                        <label for="gstNumber"
+                                            class="form-label fw-semibold">GST
+                                            Number
+                                        </label>
+                                        <input type="text" class="form-control"
+                                            id="gstNumber"
+                                            placeholder="4535435XX45CC" />
+                                    </div>
+
+                                    <div class="mb-4">
+                                        <label for="accountHolderName"
+                                            class="form-label fw-semibold">Account
+                                            Holder Name
+                                        </label>
+                                        <input type="text" class="form-control"
+                                            id="accountHolderName"
+                                            placeholder="John Doe" />
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="accountNumber"
+                                            class="form-label fw-semibold">Account
+                                            Number
+                                        </label>
+                                        <input type="text" class="form-control"
+                                            id="accountNumber"
+                                            placeholder="4535466665XXX" />
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-12 mt-10 mb-10">
+                    <div class="hstack gap-2 justify-content-end mrt-30">
+                        <button type="submit" class="btn btn-thm">
+                            Updates & Save
+                        </button>
+                        <button type="button" class="btn btn-subtle-danger">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--end row-->
+    </div>
+    <!-- container-fluid -->
+</div>
+<!-- End Page-content -->
+</div>
+<!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+<%- include('partials/footer.ejs') %>
+</div>
+
+<script>
+    $("#aadhaarFrontImage").change(function() {
+        displayPP(this, $("#aadhaarFrontPreview"));
+    });
+    $("#aadhaarBackImage").change(function() {
+        displayPP(this, $("#aadhaarBackPreview"));
+    });
+    $("#panFrontImage").change(function() {
+        displayPP(this, $("#panFrontPreview"));
+    });
+    $("#signatureImage").change(function() {
+        displayPP(this, $("#signaturePreview"));
+    });
+    $("#vendorImage").change(function() {
+        displayPP(this, $("#vendorPreview"));
+    });
+
+    $(document).ready(function() {
+        const vendor = JSON.parse(
+            '<%- JSON.stringify(vendors) %>');
+        const user = JSON.parse(
+            '<%- JSON.stringify(user) %>');
+
+            console.log(user)
+            console.log(vendor)
+
+        // Filling form fields with data according to the modal
+        $('#exampleInputFirstName').val(user.first_name);
+        $('#exampleInputLastName').val(user.last_name);
+        $('#exampleInputEmail').val(user.email);
+        $('#exampleInputFullName').val(user.name);
+        $('#exampleInputPinCode').val(user.pincode);
+        $('#exampleInputPhone').val(user.phone);
+        $('#exampleInputAddress').val(user.address);
+        $('#exampleInputDOB').val(user.dob);
+        $('#exampleInputAddress2').val(user.address2);
+        $('#exampleInputAdditionalInfo').val(user.additional_info);
+
+        $('#vendorPreview').attr('src', '/public/dist/vendor/' + user.image);
+        $('#aadhaarFrontPreview').attr('src', '/public/dist/vendor/' + vendor
+            .aadhar_front_photo);
+        $('#aadhaarBackPreview').attr('src', '/public/dist/vendor/' + vendor
+            .aadhar_back_photo);
+        $('#panFrontPreview').attr('src', '/public/dist/vendor/' + vendor
+            .pan_front_photo);
+        $('#signaturePreview').attr('src', '/public/dist/vendor/' + vendor
+            .signature);
+
+        $('#aadhaarnumber').val(vendor.aadhar_no);
+        $('#panCardNumber').val(vendor.pan_no);
+        $('#bankname').val(vendor.bank_name);
+        $('#accountNumber').val(vendor.account_no);
+        $('#accountHolderName').val(vendor.account_holder_name);
+        $('#gstNumber').val(vendor.gst_no);
+        $('#ifscCode').val(vendor.ifsc_code);
+
+        var EditVendorForm = $("#EditVendorForm");
+        EditVendorForm.on("submit", editSubmitHandler);
+
+        function editSubmitHandler(e) {
+            e.preventDefault();
+
+            // Prepare Form Data
+            var formData = new FormData(this);
+
+            // Perform AJAX Request
+            $.ajax({
+                    type: "POST",
+                    enctype: "multipart/form-data",
+                    processData: false,
+                    contentType: false,
+                    url: "/admin/vendor/edit/" + $(
+                        '#exampleInputId').val(),
+                    data: formData,
+                })
+                .done((res) => {
+                    if (res.status == 200) {
+                        iziToast.success({
+                            title: "Success",
+                            message: res.message,
+                            position: "topRight",
+                        });
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1000);
+                    } else {
+                        iziToast.error({
+                            title: "Error",
+                            message: res.message,
+                            position: "topRight",
+                        });
+                    }
+                })
+                .fail(function(xhr, status, error) {
+                    iziToast.error({
+                        title: "Error",
+                        message: xhr.responseText,
+                        position: "topRight",
+                    });
+                });
+        }
+    });
+
+    function previewImage(event, previewId) {
+        const input = event.target;
+        const preview = document.getElementById(previewId);
+    
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+    
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            };
+    
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>

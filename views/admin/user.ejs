@@ -1,0 +1,604 @@
+<%- include('partials/header.ejs') %><!-- Begin page -->
+<div id="layout-wrapper">
+    <!-- Start right Content here -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div
+                            class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0">Users</h4>
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item">
+                                        <a
+                                            href="javascript: void(0);">Dashboard</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Users
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div
+                                    class="d-flex align-items-center flex-wrap gap-3">
+                                    <div class="flex-grow-1">
+                                        <h3 class="card-title mb-0">
+                                            User List
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <button type="button"
+                                                class="btn btn-thm add-btn"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#showUserModal"
+                                                data-name="Vendor">
+                                                <i
+                                                    class="bi bi-plus-circle align-baseline me-1"></i>
+                                                Add User
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+
+                <div class="row" id="customer-list">
+                    <div class="col-xxl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row gy-3">
+                                    <div class="col-xl-4">
+                                        <div class="search-box">
+                                            <input type="text"
+                                                class="form-control search"
+                                                placeholder="Search customer, email etc..." />
+                                            <i
+                                                class="ri-search-line search-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4">
+                                        <div>
+                                            <select class="form-control"
+                                                id="idStatus" data-choices
+                                                data-choices-search-false>
+                                                <option value="all">
+                                                    All Select
+                                                </option>
+                                                <option value="Active">
+                                                    Active
+                                                </option>
+                                                <option value="Unactive">
+                                                    Unactive
+                                                </option>
+                                                <option value="Block">
+                                                    Block
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4">
+                                        <input type="text" class="form-control"
+                                            id="datepicker-range"
+                                            data-provider="flatpickr"
+                                            data-date-format="d M, Y"
+                                            data-range-date="true"
+                                            placeholder="Select date" />
+                                    </div>
+                                    <div class="col-xl-2 col-md-4">
+                                        <button
+                                            class="btn btn-subtle-primary w-100"
+                                            onclick="filterData();">
+                                            <i
+                                                class="bi bi-funnel align-baseline me-1"></i>
+                                            Filter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end card-->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive table-card">
+                                    <table
+                                        class="table align-middle table-nowrap">
+                                        <thead>
+                                            <tr>
+                                                <th class="sort cursor-pointer">
+                                                    #
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Image
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Name
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Email
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Phone
+                                                </th>
+
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="userTableBody">
+                                            <% users.forEach(function(user, index) { %>
+                                            <tr
+                                                data-id="<%= user._id %>">
+                                                <td>
+                                                    <%= index + 1 %>
+                                                </td>
+                                                <td class="customer">
+                                                    <div
+                                                        class="d-flex align-items-center">
+                                                        <div
+                                                            class="flex-shrink-0 me-2">
+                                                            <div>
+                                                                <img class="avatar-sm rounded-circle customer-image-elem"
+                                                                    src="<%- user.image ? '../../dist/users/' + user.image : '/assets/images/users/user-dummy-img.jpg' %>" />
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="name">
+                                                    <%= user.name ? user.name : user.first_name + " " + user.last_name %>
+                                                </td>
+                                                <td class="email">
+                                                    <%= user.email ? user.email : "" %>
+                                                </td>
+
+
+                                                <td class="phone">
+                                                    <%= user.phone ? user.phone : "" %>
+                                                </td>
+                                                <td>
+                                                    <div
+                                                        class="dropdown position-static">
+                                                        <button
+                                                            class="btn btn-subtle-secondary btn-sm btn-icon"
+                                                            role="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            <i
+                                                                class="bi bi-three-dots-vertical"></i>
+                                                        </button>
+                                                        <ul
+                                                            class="dropdown-menu dropdown-menu-end">
+                                                            <li>
+                                                                <a class="dropdown-item edit-item-btn"
+                                                                    data-bs-toggle="modal"
+                                                                    data-name="User"
+                                                                    href="#showEditModal"
+                                                                    id="edit_btn"
+                                                                    data-id="<%= user._id %>"
+                                                                    data-model="<%= JSON.stringify(user) %>"><i
+                                                                        class="ph-pencil align-middle me-1"></i>
+                                                                    Edit
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item remove-item-btn"
+                                                                    href="#deleteRecordModal"
+                                                                    data-bs-toggle="modal"
+                                                                    data-id="<%= user._id %>">
+                                                                    <i
+                                                                        class="ph-trash align-middle me-1"></i>Remove
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="noresult" style="display: none">
+                                    <div class="text-center py-4">
+                                        <i
+                                            class="ph-magnifying-glass fs-1 text-primary"></i>
+                                        <h5 class="mt-2">
+                                            Sorry! No Result Found
+                                        </h5>
+                                        <p class="text-muted mb-0">
+                                            We've searched more than 150+
+                                            customers We did not find any
+                                            customers for you search.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="align-items-center mt-4 justify-content-between row text-center text-sm-start"
+                                    id="pagination-element">
+                                    <div class="col-sm">
+                                        <div class="text-muted">
+                                            Showing
+                                            <span class="fw-semibold">10</span>
+                                            of
+                                            <span class="fw-semibold">13</span>
+                                            Results
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                        <div
+                                            class="pagination-wrap hstack gap-2">
+                                            <a class="page-item pagination-prev disabled"
+                                                href="javascript:void(0)">Previous</a>
+                                            <ul
+                                                class="pagination listjs-pagination mb-0">
+                                            </ul>
+                                            <a class="page-item pagination-next"
+                                                href="javascript:void(0)">Next</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+    </div>
+    <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+
+<!-- Add User Modal -->
+<div class="modal fade" id="showUserModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel">Add User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close" id="close-ordermodal"></button>
+            </div>
+            <form id="addUserForm" class="tablelist-form">
+                <div class="modal-body">
+                    <div id="alert-error-msg"
+                        class="d-none alert alert-danger py-2"></div>
+                    <input type="hidden" id="id-field" />
+                    <div class="mb-3">
+                        <label for="add_firstname" class="form-label">First
+                            Name</label>
+                        <input type="text" id="add_firstname"
+                            class="form-control" name="first_name"
+                            placeholder="Enter First name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="add_lastname" class="form-label">Last
+                            Name</label>
+                        <input type="text" id="add_lastname"
+                            class="form-control" name="last_name"
+                            placeholder="Enter Last name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="add_email" class="form-label">Email</label>
+                        <input type="email" id="add_email" class="form-control"
+                            name="email" placeholder="Enter Email" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="add_password"
+                            class="form-label">Password</label>
+                        <input type="password" id="add_password"
+                            class="form-control" name="password"
+                            placeholder="Enter Password" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="add_confirmpassword"
+                            class="form-label">Confirm Password</label>
+                        <input type="password" id="add_confirmpassword"
+                            class="form-control" name="confirmpassword"
+                            placeholder="Enter Confirm Password" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success"
+                            id="add-btn">Add User</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end Add User Modal -->
+
+<!-- Edit User Modal -->
+<div class="modal fade" id="showEditModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close" id="close-ordermodal"></button>
+            </div>
+            <form class="tablelist-form" id="editform">
+                <div class="modal-body">
+                    <div id="alert-error-msg"
+                        class="d-none alert alert-danger py-2"></div>
+                    <input type="hidden" id="editid" name="editid" />
+                    <div class="text-center mb-3">
+                        <div class="position-relative d-inline-block">
+                            <div
+                                class="position-absolute top-100 start-100 translate-middle">
+                                <label for="image" class="mb-0"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="right"
+                                    title="Select User photo">
+                                    <span class="avatar-xs d-inline-block">
+                                        <span
+                                            class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                            <i class="ri-image-fill"></i>
+                                        </span>
+                                    </span>
+                                </label>
+                                <input class="form-control d-none"
+                                    id="image" name="image" type="file"
+                                    accept="image/png, image/gif, image/jpeg">
+                            </div>
+                            <div class="avatar-lg">
+                                <div class="avatar-title bg-light rounded-3"
+                                    id="editpreviewimage">
+                                    <img src="" alt="Image Preview"
+                                        id="editdisplay_perview_image"
+                                        class="avatar-md h-auto rounded-3 object-fit-cover">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Other input fields for user details -->
+                    <div class="mb-3">
+                        <label for="edit_first_name" class="form-label">First
+                            Name</label>
+                        <input type="text" id="edit_first_name"
+                            class="form-control" name="edit_first_name"
+                            placeholder="Enter User first name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_last_name" class="form-label">Last
+                            Name</label>
+                        <input type="text" id="edit_last_name"
+                            class="form-control" name="edit_last_name"
+                            placeholder="Enter User last name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_email" class="form-label">User
+                            Email</label>
+                        <input type="email" id="edit_email" class="form-control"
+                            name="edit_email" placeholder="Enter User email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_phone" class="form-label">User
+                            Phone</label>
+                        <input type="text" id="edit_phone" class="form-control"
+                            name="edit_phone"
+                            placeholder="Enter User Phone Number">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_dob" class="form-label">User
+                            DOB</label>
+                        <input type="text" id="edit_dob" class="form-control"
+                            name="edit_dob" placeholder="Enter User DOB">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_address" class="form-label">User
+                            Address</label>
+                        <input type="text" id="edit_address"
+                            class="form-control" name="edit_address"
+                            placeholder="Enter User address">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_pincode" class="form-label">User
+                            Pincode</label>
+                        <input type="text" id="edit_pincode"
+                            class="form-control" name="edit_pincode"
+                            placeholder="Enter User pincode">
+                    </div>
+                    <div class="mb-3">
+                        <label for="edit_additional_info" class="form-label">User
+                            Additional Info</label>
+                        <input type="text" id="edit_additional_info"
+                            class="form-control" name="edit_additional_info"
+                            placeholder="Enter User Additional Info">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light"
+                            data-bs-dismiss="modal">Close</button>
+                        <button type="submit"
+                            class="btn btn-success">Save</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end Edit User Modal -->
+
+
+<!-- deleteRecordModal -->
+<div id="deleteRecordModal" class="modal fade zoomIn" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" id="deleteRecord-close"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-md-5">
+                <div class="text-center">
+                    <div class="text-danger">
+                        <i class="bi bi-trash display-4"></i>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="mb-2">Are you sure ?</h3>
+                        <p class="text-muted fs-lg mx-3 mb-0">
+                            Are you sure you want to remove this record ?
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                    <button type="button" class="btn w-sm btn-light btn-hover"
+                        data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="submit" class="btn w-sm btn-danger btn-hover"
+                        id="delete-record">
+                        Yes, Delete It!
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /deleteRecordModal -->
+<%- include('partials/footer.ejs') %>
+<script>
+    //#Add User Attributes
+    var addform = $("#addUserForm");
+    addform.on("submit", submitFormHandler);
+
+    function submitFormHandler(e) {
+        e.preventDefault();
+
+        var formData = getFormData(addform);
+        console.log(formData);
+
+        // DO POST
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: "/admin/user/add",
+            data: JSON.stringify(formData),
+
+            success: function(res) {
+
+                iziToast.success({
+                    title: "Success",
+                    message: res.message,
+                    position: "topRight",
+                });
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+
+            },
+            error: function(xhr, status, error) {
+                iziToast.error({
+                    title: "Error",
+                    message: xhr.responseText,
+                    position: "topRight",
+                });
+            }
+        });
+        console.log(res.status);
+    }
+
+    function getFormData(form) {
+        var formData = {};
+        form.serializeArray().forEach(function(field) {
+            formData[field.name] = field.value;
+        });
+        return formData;
+    }
+
+    //#region starts Edit User
+
+    $("#image").change(function() {
+        displayPP(this, $("#editdisplay_perview_image"), $(
+            "editpreviewimage"));
+    });
+
+    // Fill form fields with data when the edit button is clicked
+    $(document).on("click", "#edit_btn", function(e) {
+        var data = $(this).attr("data-model");
+        data = JSON.parse(data);
+
+        $('#editdisplay_perview_image').attr('src', '/dist/users/' +
+            data.image); // Update image preview
+        $("#editid").val(data._id);
+        $("#edit_first_name").val(data.first_name);
+        $("#edit_last_name").val(data.last_name);
+        $("#edit_email").val(data.email);
+        $("#edit_phone").val(data.phone);
+        $("#edit_dob").val(data.dob);
+        $("#edit_address").val(data.address);
+        $("#edit_additional_info").val(data.additional_info);
+        $("#edit_pincode").val(data.pincode);
+    });
+
+    // Handle form submission
+    var editform = $("#editform");
+    editform.on("submit", editSubmitHandler);
+
+    function editSubmitHandler(e) {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+
+        $.ajax({
+                type: "POST",
+                enctype: "multipart/form-data",
+                processData: false,
+                contentType: false,
+                url: "/admin/user/edit",
+                data: formData,
+            })
+            .done((res) => {
+                if (res.status == 200) {
+                    iziToast.success({
+                        title: "Success",
+                        message: res.message,
+                        position: "topRight",
+                    });
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1000);
+                } else {
+                    iziToast.error({
+                        title: "Error",
+                        message: res.message,
+                        position: "topRight",
+                    });
+                }
+            })
+            .fail(function(xhr, status, error) {
+                iziToast.error({
+                    title: "Error",
+                    message: xhr.responseText,
+                    position: "topRight",
+                });
+            });
+    }
+
+    //#endregion Edit User
+</script>

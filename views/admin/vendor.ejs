@@ -1,0 +1,636 @@
+<%- include('partials/header.ejs') %><!-- Begin page -->
+<div id="layout-wrapper">
+    <!-- Start right Content here -->
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <!-- start page title -->
+                <div class="row">
+                    <div class="col-12">
+                        <div
+                            class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0">Vendors</h4>
+
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item">
+                                        <a
+                                            href="javascript: void(0);">Dashboard</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Vendors
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end page title -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div
+                                    class="d-flex align-items-center flex-wrap gap-3">
+                                    <div class="flex-grow-1">
+                                        <h3 class="card-title mb-0">
+                                            Vendor List
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <div class="d-flex flex-wrap gap-2">
+                                            <button type="button"
+                                                class="btn btn-thm add-btn"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#showVendorModal"
+                                                data-name="Vendor">
+                                                <i
+                                                    class="bi bi-plus-circle align-baseline me-1"></i>
+                                                Add Vendor
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+
+                <div class="row" id="customer-list">
+                    <div class="col-xxl-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row gy-3">
+                                    <div class="col-xl-4">
+                                        <div class="search-box">
+                                            <input type="text"
+                                                class="form-control search"
+                                                placeholder="Search customer, email etc..." />
+                                            <i
+                                                class="ri-search-line search-icon"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4">
+                                        <div>
+                                            <select class="form-control"
+                                                id="idStatus" data-choices
+                                                data-choices-search-false>
+                                                <option value="all">
+                                                    All Select
+                                                </option>
+                                                <option value="Active">
+                                                    Active
+                                                </option>
+                                                <option value="Unactive">
+                                                    Unactive
+                                                </option>
+                                                <option value="Block">
+                                                    Block
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-3 col-md-4 ">
+                                        <input id="daterangeInput"
+                                            class="py-2 px-14 border-sm rounded-1"
+                                            type="text" name="daterange"
+                                            value="01/01/2018 - 01/15/2018" />
+                                    </div>
+                                    <div class="col-xl-2 col-md-4">
+                                        <button
+                                            class="btn btn-subtle-primary w-100"
+                                            onclick="filterData()">
+                                            <i
+                                                class="bi bi-funnel align-baseline me-1"></i>
+                                            Filter
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end card-->
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="table-responsive table-card">
+                                    <table
+                                        class="table align-middle table-nowrap list"
+                                        id="userTableBody">
+                                        <thead>
+                                            <tr>
+                                                <th class="sort cursor-pointer">
+                                                    #
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Image
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Name
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Email
+                                                </th>
+                                                <th class="sort cursor-pointer">
+                                                    Status
+                                                </th>
+                                                <th class="">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="list" id="userTableBody">
+                                            <% users.forEach((user, index, status_id) => { %>
+                                            <tr
+                                                data-id="<%= user._id %>">
+                                                <td>
+                                                    <%= (currentPage - 1) * 10 + index + 1 %>
+                                                </td>
+                                                <td class="customer">
+                                                    <div
+                                                        class="d-flex align-items-center">
+                                                        <div
+                                                            class="flex-shrink-0 me-2">
+                                                            <div>
+                                                                <img class="avatar-sm rounded-circle customer-image-elem"
+                                                                    src="../../dist/vendor/<%- user.image %>" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="name">
+                                                    <% if (user.name) { %>
+                                                    <%= user.name %>
+                                                    <% } else { %>
+                                                    <%= (user.first_name || user.last_name) ? user.first_name + " " + user.last_name: '' %>
+                                                    
+                                                    <% } %>
+                                                </td>
+                                                <td class="email">
+                                                    <%= user.email ? user.email : '' %>
+                                                </td>
+                                                <td class="statusbar">
+                                                    <button
+                                                        class="toggle-btn actives"
+                                                        data-id="<%= user._id %>">
+                                                        Active
+                                                    </button>
+                                                </td>
+                                                <td
+                                                    class="flex items-center justify-between">
+                                                    <div class="dropdown mt-1">
+                                                        <a
+                                                            href="/admin/vendor/edit/<%= user._id %>">
+                                                            <button
+                                                                class="edit-vendor pencil_edit"
+                                                                type="button">
+                                                                <i
+                                                                    class="bi bi-pencil"></i>
+                                                            </button>
+                                                        </a>
+                                                        <button
+                                                            class="btn btn-subtle-secondary btn-sm btn-icon three-dot"
+                                                            role="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                            <i
+                                                                class="bi bi-three-dots-vertical"></i>
+                                                        </button>
+                                                        <ul
+                                                            class="dropdown-menu dropdown-menu-end">
+                                                            <li>
+                                                                <a class="dropdown-item edit-item-btn"
+                                                                    href="#showEditModal"
+                                                                    data-bs-toggle="modal"
+                                                                    data-id="<%= user._id %>">
+                                                                    <i
+                                                                        class="ph-pencil align-middle me-1"></i>
+                                                                    View
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="dropdown-item ban-item-btn btn btn-danger"
+                                                                    href="javascript:void(0);"
+                                                                    data-id="<%= user._id %>">
+                                                                    <i
+                                                                        class="bi bi-pencil align-middle me-1"></i>
+                                                                    Ban this
+                                                                    vendor
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <% }) %>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div class="noresult" style="display: none">
+                                    <div class="text-center py-4">
+                                        <i
+                                            class="ph-magnifying-glass fs-1 text-primary"></i>
+                                        <h5 class="mt-2">
+                                            Sorry! No Result Found
+                                        </h5>
+                                        <p class="text-muted mb-0">
+                                            We've searched more than 150+
+                                            customers We did not find any
+                                            customers for you search.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="align-items-center mt-4 justify-content-between row text-center text-sm-start"
+                                    id="pagination-element">
+                                    <div class="col-sm">
+                                        <div class="text-muted">
+                                            Showing
+                                            <span class="fw-semibold">
+                                                <%= users.length %>
+                                            </span>
+                                            of
+                                            <span class="fw-semibold">
+                                                <%= totalUsers %>
+                                            </span>
+                                            Results
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-auto mt-3 mt-sm-0">
+                                        <div
+                                            class="pagination-wrap hstack gap-2">
+                                            <% if (currentPage > 1) { %>
+                                            <a class="page-item pagination-prev"
+                                                href="/users?page=<%= currentPage - 1 %>">Previous</a>
+                                            <% } else { %><a
+                                                class="page-item pagination-prev disabled"
+                                                href="javascript:void(0)">Previous</a>
+
+                                            
+                                            <% } %>
+                                            <ul
+                                                class="pagination listjs-pagination mb-0">
+                                                <% for (let i = 1; i <= totalPages; i++) { %>
+                                                <li
+                                                    class="page-item<%= i === currentPage ? 'active' : '' %>">
+                                                    <a class="page-link"
+                                                        href="/users?page=<%= i %>">
+                                                        <%= i %>
+                                                    </a>
+                                                </li>
+
+                                                
+                                                <% } %>
+                                            </ul>
+                                            <% if (currentPage < totalPages) { %>
+                                            <a class="page-item pagination-next"
+                                                href="/users?page=<%= currentPage + 1 %>">Next</a>
+                                            <% } else { %><a
+                                                class="page-item pagination-next disabled"
+                                                href="javascript:void(0)">Next</a>
+
+                                            
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--end col-->
+                </div>
+                <!--end row-->
+            </div>
+            <!-- container-fluid -->
+        </div>
+        <!-- End Page-content -->
+    </div>
+    <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+
+
+<!-- Add Vendor Modal -->
+<div class="modal fade" id="showVendorModal" tabindex="-1"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-light p-3">
+                <h5 class="modal-title" id="exampleModalLabel">Add Vendor</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                    aria-label="Close" id="close-ordermodal"></button>
+            </div>
+            <form id="addVendorForm" enctype="multipart/form-data"
+                class="tablelist-form">
+                <div class="modal-body">
+                    <div id="alert-error-msg"
+                        class="d-none alert alert-danger py-2"></div>
+                    <input type="hidden" id="id-field" />
+
+                    <div class="text-center mb-3">
+                        <div class="position-relative d-inline-block">
+                            <div
+                                class="position-absolute top-100 start-100 translate-middle">
+                                <label for="image-input" class="mb-0"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="right"
+                                    title="Select Category photo">
+                                    <span class="avatar-xs d-inline-block">
+                                        <span
+                                            class="avatar-title bg-light border rounded-circle text-muted cursor-pointer">
+                                            <i class="ri-image-fill"></i>
+                                        </span>
+                                    </span>
+                                </label>
+                                <input class="form-control d-none"
+                                    id="image-input" name="image" type="file"
+                                    accept="image/png, image/gif, image/jpeg" />
+                            </div>
+                            <div class="avatar-lg">
+                                <div class="avatar-title bg-light rounded-3">
+                                    <img src="/assets/images/users/user-dummy-img.jpg"
+                                        alt="" id="image-preview"
+                                        class="avatar-md h-auto rounded-3 object-fit-cover" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="vendorfirstname-field"
+                            class="form-label">First Name</label>
+                        <input type="text" id="vendorfirstname-field"
+                            class="form-control" name="first_name"
+                            placeholder="Enter Vendor name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="vendorlastname-field"
+                            class="form-label">Last Name</label>
+                        <input type="text" id="vendorlastname-field"
+                            class="form-control" name="last_name"
+                            placeholder="Enter Vendor name" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="customername-field"
+                            class="form-label">Email</label>
+                        <input type="email" id="vendoremail-field"
+                            class="form-control" name="email"
+                            placeholder="Enter Vendor email" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="vendorpassword-field"
+                            class="form-label">Password</label>
+                        <input type="text" id="vendorpassword-field"
+                            class="form-control" name="password"
+                            placeholder="Enter Vendor Password" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="customerconfirmpassword-field"
+                            class="form-label">Confirm Password</label>
+                        <input type="text" id="customerconfirmpassword-field"
+                            class="form-control" name="confirmpassword"
+                            placeholder="Enter Confirm Password" />
+                    </div>
+
+
+                    <div>
+                        <label for="status-field"
+                            class="form-label">Status</label>
+                        <select class="form-control" id="status-field"
+                            name="status_id">
+                            <option value="" disabled selected>
+                                Select Status
+                            </option>
+                            <% statuses.forEach(function(element) { %>
+                            <option value="<%= element._id %>">
+                                <%= element.name %>
+                            </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="hstack gap-2 justify-content-end">
+                        <button type="button" class="btn btn-light"
+                            data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-success"
+                            id="add-btn">
+                            Add Vendor
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end Add Category Modal -->
+
+
+
+
+<!-- deleteRecordModal -->
+<div id="deleteRecordModal" class="modal fade zoomIn" tabindex="-1"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" id="deleteRecord-close"
+                    data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body p-md-5">
+                <div class="text-center">
+                    <div class="text-danger">
+                        <i class="bi bi-trash display-4"></i>
+                    </div>
+                    <div class="mt-4">
+                        <h3 class="mb-2">Are you sure?</h3>
+                        <p class="text-muted fs-lg mx-3 mb-0">
+                            Are you sure you want to Ban this Vendor?
+                        </p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                    <button type="button" class="btn w-sm btn-light btn-hover"
+                        data-bs-dismiss="modal">
+                        Close
+                    </button>
+                    <button type="button" class="btn w-sm btn-danger btn-hover"
+                        id="confirm-ban-btn">
+                        Yes, Ban this.
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /deleteRecordModal -->
+<%- include('partials/footer.ejs') %>
+<script>
+
+</script>
+
+
+<script>
+    $("#image-input").on("change", function() {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $("#image-preview").attr("src", e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    var addform = $("#addVendorForm");
+    addform.on("submit", submitFormHandler);
+
+
+    function submitFormHandler(e) {
+        e.preventDefault();
+
+        var formData = new FormData(addform[0]);
+        console.log(formData);
+        $.ajax({
+                type: "POST",
+                url: "/admin/vendor/add",
+                data: formData,
+                processData: false,
+                contentType: false
+            })
+            .done((res) => {
+                iziToast.success({
+                    title: "Success",
+                    message: res.message,
+                    position: "topRight",
+                });
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+            })
+            .fail(function(xhr, status, error) {
+                iziToast.error({
+                    title: "Error",
+                    message: xhr.responseText,
+                    position: "topRight",
+                });
+            });
+    }
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Function to perform search
+        $(".search").on("keyup", function() {
+            var searchText = $(this).val().toLowerCase();
+
+            $("#userTableBody tr").each(function() {
+                var name = $(this).find(".name").text()
+                    .toLowerCase();
+                var email = $(this).find(".email")
+                    .text().toLowerCase();
+
+                if (name.includes(searchText) || email
+                    .includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            // Show/hide no results found message
+            if ($("#userTableBody tr:visible").length > 0) {
+                $(".noresult").hide();
+            } else {
+                $(".noresult").show();
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    $(function() {
+        $('#daterangeInput').daterangepicker({
+                opens: 'left',
+                locale: {
+                    format: 'MM/DD/YYYY'
+                }
+            },
+            function(start, end) {
+                // Format dates for API request
+                const startDate = start.format('YYYY-MM-DD');
+                const endDate = end.format('YYYY-MM-DD');
+
+                // Make API request to fetch users based on date range
+                axios
+                    .get(
+                        `/venders?startDate=${startDate}&endDate=${endDate}`
+                    )
+                    .then((response) => {
+                        const users = response.data.users;
+                        updateTable(users);
+                    })
+                    .catch((error) => {
+                        console.error('Error fetching users:',
+                            error);
+                    });
+            }
+        );
+    });
+
+
+    $(document).ready(function() {
+        // Handle status toggle button click
+        $('.toggle-btn').on('click', function() {
+            var userId = $(this).data('id');
+            var button = $(this);
+            var status = button.hasClass('actives') ? 'Active' :
+                'Inactive';
+
+            // Toggle classes and text content
+            if (button.hasClass('actives')) {
+                button.removeClass('actives').addClass(
+                    'inactives').text('Inactive');
+            } else {
+                button.removeClass('inactives').addClass(
+                    'actives').text('Active');
+            }
+
+        });
+
+        // Handle "Ban this vendor" button click
+        $('.ban-item-btn').on('click', function() {
+            var userId = $(this).data('id');
+            var currentStatusButton = $(this).closest('tr')
+                .find('.toggle-btn');
+
+            // Open the confirmation modal
+            $('#deleteRecordModal').modal('show');
+
+            // Handle "Yes, ban this" button click in modal
+            $('#confirm-ban-btn').off('click').on('click',
+                function() {
+                    currentStatusButton.removeClass(
+                            'actives').addClass('banned')
+                        .text('Banned');
+                    currentStatusButton.prop('disabled',
+                        true); // Disable button
+
+
+                    $('#deleteRecordModal').modal('hide');
+                });
+        });
+    });
+</script>
+
+<script>
+    function formatDate(dateString) {
+        const options = {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', options);
+    }
+</script>

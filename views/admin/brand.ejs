@@ -1,0 +1,512 @@
+<%- include('partials/header.ejs') %>
+<!-- Begin page -->
+<div id="layout-wrapper">
+  <!-- Start right Content here -->
+  <div class="main-content">
+    <div class="page-content">
+      <div class="container-fluid">
+        <!-- start page title -->
+        <div class="row">
+          <div class="col-12">
+            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+              <h4 class="mb-sm-0">Brands</h4>
+
+              <div class="page-title-right">
+                <ol class="breadcrumb m-0">
+                  <li class="breadcrumb-item">
+                    <a href="javascript: void(0);">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active">
+                    Brands
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- end page title -->
+
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex align-items-center flex-wrap gap-3">
+                  <div class="flex-grow-1">
+                    <h3 class="card-title mb-0">
+                      Brand List
+                    </h3>
+                  </div>
+                  <div>
+                    <div class="d-flex flex-wrap gap-2">
+                      <button type="button" class="btn btn-thm add-btn" data-bs-toggle="modal" data-bs-target="#showModal" data-name="Brand">
+                        <i class="bi bi-plus-circle align-baseline me-1"></i>
+                        Add Brand
+                      </button>
+                      <!-- <button
+                                                type="button"
+                                                class="btn btn-secondary"
+                                            >
+                                                <i
+                                                    class="ph-cloud-arrow-down align-middle me-1"
+                                                ></i>
+                                                Import
+                                            </button>
+                                            <button
+                                                type="button"
+                                                class="btn btn-subtle-info"
+                                            >
+                                                <i
+                                                    class="ph-cloud-arrow-up align-middle me-1"
+                                                ></i>
+                                                Export
+                                            </button> F-->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end col-->
+        </div>
+        <!--end row-->
+
+        <div class="row" id="customer-list">
+          <div class="col-xxl-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="row gy-3">
+                  <div class="col-xl-4">
+                    <div class="search-box">
+                      <input type="text" class="form-control search" placeholder="Search customer, email etc..." />
+                      <i class="ri-search-line search-icon"></i>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-md-4">
+                    <div>
+                      <select class="form-control" id="idStatus" data-choices data-choices-search-false>
+                        <option value="all">
+                          All Select
+                        </option>
+                        <option value="Active">
+                          Active
+                        </option>
+                        <option value="Unactive">
+                          Unactive
+                        </option>
+                        <option value="Block">
+                          Block
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-xl-3 col-md-4">
+                    <input type="text" class="form-control" id="datepicker-range" data-provider="flatpickr" data-date-format="d M, Y" data-range-date="true" placeholder="Select date" />
+                  </div>
+                  <div class="col-xl-2 col-md-4">
+                    <button class="btn btn-subtle-primary w-100" onclick="filterData();">
+                      <i class="bi bi-funnel align-baseline me-1"></i>
+                      Filter
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--end card-->
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive table-card">
+                  <table class="table align-middle table-nowrap" id="brandTable">
+                    <thead>
+                      <tr>
+                        <th class="sort cursor-pointer">#</th>
+                        <th class="sort cursor-pointer">Brand Name</th>
+                        <th class="sort cursor-pointer">Status</th>
+                        <th class="sort cursor-pointer">
+                          Action
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="list" id="brandTableBody">
+                        <% brands.forEach(function(brand, index) { %>
+                        <tr data-id="<%= brand._id %>">
+                          <!-- Index column -->
+                          <td><%= index + 1 %></td>
+                      
+                          <td class="customer">
+                            <div class="d-flex align-items-center">
+                              <div class="flex-grow-1">
+                                <h5 class="fs-base mb-0">
+                                  <a href="#" class="text-reset brand-name-elem">
+                                    <%= brand.name %>
+                                  </a>
+                                </h5>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="status">
+                            <span class="badge bg-secondary-subtle text-secondary">
+                              <%= brand.status_id ? brand.status_id.name : ' ' %>
+                            </span>
+                          </td>
+                          <td>
+                            <div class="dropdown">
+                              <button class="btn btn-subtle-secondary btn-sm dropdown" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="ri-more-fill align-middle"></i>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <a class="dropdown-item edit-item-btn" href="#editBrandModal" data-bs-toggle="modal" data-bs-target="#editBrandModal" id="edit_btn" data-model="<%= JSON.stringify(brand) %>">
+                                    <i class="ri-pencil-fill align-bottom me-2 text-muted"></i>
+                                    Edit
+                                  </a>
+                                </li>
+                                <li>
+                                  <a class="dropdown-item remove-item-btn" data-bs-toggle="modal" data-id="<%= brand._id %>" href="#deleteRecordModal">
+                                    <i class="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
+                                    Delete
+                                  </a>
+                                </li>
+                              </ul>
+                            </div>
+                          </td>
+                        </tr>
+                        <% }); %>
+                      </tbody>
+                      
+                  </table>
+                </div>
+                <div class="noresult" style="display: none">
+                  <div class="text-center py-4">
+                    <i class="ph-magnifying-glass fs-1 text-primary"></i>
+                    <h5 class="mt-2">
+                      Sorry! No Result Found
+                    </h5>
+                    <p class="text-muted mb-0">
+                      We've searched more than 150+
+                      customers We did not find any
+                      customers for you search.
+                    </p>
+                  </div>
+                </div>
+                <div class="align-items-center mt-4 justify-content-between row text-center text-sm-start" id="pagination-element">
+                  <div class="col-sm">
+                    <div class="text-muted">
+                      Showing
+                      <span class="fw-semibold">10</span>
+                      of
+                      <span class="fw-semibold">13</span>
+                      Results
+                    </div>
+                  </div>
+                  <div class="col-sm-auto mt-3 mt-sm-0">
+                    <div class="pagination-wrap hstack gap-2">
+                      <a class="page-item pagination-prev disabled" href="javascript:void(0)">Previous</a>
+                      <ul class="pagination listjs-pagination mb-0"></ul>
+                      <a class="page-item pagination-next" href="javascript:void(0)">Next</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--end col-->
+        </div>
+        <!--end row-->
+      </div>
+      <!-- container-fluid -->
+    </div>
+    <!-- End Page-content -->
+  </div>
+  <!-- end main content-->
+</div>
+<!-- END layout-wrapper -->
+
+<!-- Add Category Modal -->
+<div class="modal fade" id="showModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-light p-3">
+        <h5 class="modal-title" id="exampleModalLabel">Add Brand</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-ordermodal"></button>
+      </div>
+      <form class="tablelist-form" id="submitForm">
+        <div class="modal-body">
+          <input type="hidden" id="id-field" />
+
+          <div class="text-center mb-3"></div>
+          <div class="mb-3">
+            <label for="brandname-field" class="form-label">Brand Name</label>
+            <input type="text" id="brandname-field" class="form-control" name="name" placeholder="Enter Brand name" />
+          </div>
+
+          <div>
+            <label for="status-field" class="form-label">Status</label>
+            <select class="form-control" id="status-field" name="status_id">
+              <option value="" disabled selected>
+                Select Status
+              </option>
+              <%statuses.forEach(function(element){ %>
+              <option value="<%= element._id %>">
+                <%= element.name%>
+              </option>
+              <% }); %>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="hstack gap-2 justify-content-end">
+            <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+              Close
+            </button>
+            <button type="submit" class="btn btn-success" id="add-btn">
+              Add Brand
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- end Add Category Modal -->
+
+<!-- Edit Modal Starts -->
+<div class="modal fade" id="editBrandModal" tabindex="-1" aria-labelledby="editBrandModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editBrandModalLabel">Edit Brand</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form class="tablelist-form" id="editForm">
+        <div class="modal-body">
+          <input type="hidden" id="editid" name="editid" />
+
+          <div class="mb-3">
+            <label for="edit-name-field" class="form-label">Brand Name</label>
+            <input type="text" id="edit_name" class="form-control" name="name" placeholder="Enter Category name" />
+          </div>
+
+          <div>
+            <label for="edit-status-field" class="form-label">Status</label>
+            <select class="form-control" id="edit_status_id" name="status_id">
+              <option value="" disabled selected>
+                Select Status
+              </option>
+              <%statuses.forEach(function(element){ %>
+              <option value="<%= element._id %>">
+                <%= element.name%>
+              </option>
+              <% }); %>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="submit" class="btn btn-success">
+            Save
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Edir Modal ends -->
+
+<!-- deleteRecordModal -->
+<div id="deleteRecordModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" id="deleteRecord-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-md-5">
+        <div class="text-center">
+          <div class="text-danger">
+            <i class="bi bi-trash display-4"></i>
+          </div>
+          <div class="mt-4">
+            <h3 class="mb-2">Are you sure?</h3>
+            <p class="text-muted fs-lg mx-3 mb-0">
+              Are you sure you want to remove this record?
+            </p>
+          </div>
+        </div>
+        <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+          <button type="button" class="btn w-sm btn-light btn-hover" data-bs-dismiss="modal">
+            Close
+          </button>
+          <button type="button" class="btn w-sm btn-danger btn-hover" id="delete-brand">
+            Yes, Delete It!
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+
+<!-- /deleteRecordModal -->
+
+<%- include('partials/footer.ejs') %>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  var addform = $("#submitForm");
+  addform.on("submit", submitFormHandler);
+
+  function submitFormHandler(e) {
+    e.preventDefault();
+    var formData = getFormData(addform);
+    console.log(formData);
+    // DO POST
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/admin/brand/add",
+        data: JSON.stringify(formData),
+      })
+      .done((res) => {
+        if (res.status == 200) {
+          iziToast.success({
+            title: "Success",
+            message: res.message,
+            position: "topRight",
+          });
+          setTimeout(function() {
+            location.reload();
+          }, 1000);
+        } else {
+          iziToast.error({
+            title: "Error",
+            message: res.message,
+            position: "topRight",
+          });
+        }
+      })
+      .fail(function(xhr, status, error) {
+        iziToast.error({
+          title: "Error",
+          message: xhr.responseText,
+          position: "topRight",
+        });
+      });
+  }
+</script>
+<script>
+  $(document).on("click", "#edit_btn", function(e) {
+    var data = $(this).attr("data-model");
+    if (!data) {
+      console.error("No data-model attribute found on the button.");
+      return;
+    }
+
+    try {
+      data = JSON.parse(data);
+    } catch (error) {
+      console.error("Invalid JSON in data-model attribute: ", error);
+      return;
+    }
+
+    $("#editid").val(data._id);
+    $("#edit_name").val(data.name);
+    $("#edit_status_id").val(data.status_id._id);
+  });
+
+  function getFormData($form) {
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function(n, i) {
+      indexed_array[n["name"]] = n["value"];
+    });
+
+    return indexed_array;
+  }
+
+  var editForm = $("#editForm");
+  editForm.on("submit", function(e) {
+    e.preventDefault();
+
+    var formData = getFormData(editForm);
+    var id = $("#editid").val();
+
+    console.log("Form Data: ", formData);
+
+    $.ajax({
+        type: "POST",
+        url: "/admin/brand/edit/" + id,
+        contentType: "application/json",
+        data: JSON.stringify(formData),
+      })
+      .done((res) => {
+        if (res.status === 200) {
+          iziToast.success({
+            title: "Success",
+            message: res.message,
+            position: "topRight",
+          });
+          $('#editBrandModal').modal('hide');
+          // Optionally reload the page or update the UI as needed
+          setTimeout(function() {
+            location.reload();
+          }, 1000);
+        } else {
+          iziToast.error({
+            title: "Error",
+            message: res.message,
+            position: "topRight",
+          });
+        }
+      })
+      .fail(function(xhr, status, error) {
+        iziToast.error({
+          title: "Error",
+          message: xhr.responseText,
+          position: "topRight",
+        });
+      });
+  });
+</script>
+
+
+
+<script>
+  //#region Delete Brand
+  $(document).on("click", ".remove-item-btn", function() {
+    currentDeleteId = $(this).data("id"); // Get the id of the brand to delete
+    console.log(currentDeleteId)
+  });
+
+  $(document).on("click", "#delete-brand", function() {
+    
+    if (!currentDeleteId) {
+        console.error("No brand ID set for deletion.");
+        return;
+      }
+    $.ajax({
+      type: "POST",
+      url: "/admin/brand/delete/" + currentDeleteId,
+      success: function(response) {
+        iziToast.success({
+          title: "Deleted",
+          message: "Brand deleted successfully!",
+          position: "topRight",
+        });
+        setTimeout(function() {
+          location.reload();
+        }, 1000);
+      },
+      error: function(xhr, status, error) {
+        iziToast.error({
+          title: "Error",
+          message: xhr.responseText || "Failed to delete brand!",
+          position: "topRight",
+        });
+      },
+    });
+  });
+  //#endregion Delete Brand
+</script>
